@@ -31,14 +31,20 @@ Route::group(['middleware' => ['auth','checkRole:user']], function () {
         return redirect('home'); // Mengarahkan pengguna admin langsung ke dashboard
     });
     Route::get('/home','HomeController@index')->name('home');
-    Route::get('/dokumen','DokumenController@index');
-    Route::get('/dokumen/index','DokumenController@index');
-    Route::get('/dokumen/create','DokumenController@create');
-    Route::get('/dokumen/createtemp','DokumenController@createtemp');
-    Route::get('/template/index','TemplateController@index');
+    
 });
 
 Route::group(['middleware' => ['auth','checkRole:admin,user']], function () {
+
+    // Rute untuk menampilkan halaman profil
+Route::get('/profil', 'ProfilController@index')->name('profil');
+
+// Rute untuk menampilkan form edit password
+Route::get('/profil/edit-password', 'ProfilController@editPassword')->name('edit-password');
+
+// Rute untuk memproses update password
+Route::post('/profil/update-password', 'ProfilController@updatePassword')->name('update-password');
+
 
     Route::get('/suratmasuk','SuratMasukController@index');
     Route::get('/suratmasuk/index','SuratMasukController@index');
@@ -60,6 +66,12 @@ Route::group(['middleware' => ['auth','checkRole:admin,user']], function () {
     Route::get('/kategori/{id}/edit','KategoriController@edit');
     Route::post('/kategori/{id}/update','KategoriController@update');
     Route::get('/kategori/{id}/delete','KategoriController@delete');
+
+    Route::get('/dokumen','DokumenController@index');
+    Route::get('/dokumen/index','DokumenController@index');
+    Route::get('/dokumen/create','DokumenController@create');
+    Route::get('/dokumen/createtemp','DokumenController@createtemp');
+    Route::get('/template/index','TemplateController@index');
 
 
 });

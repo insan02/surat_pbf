@@ -37,12 +37,10 @@
             </div>
             </div>
             <div>
-                @if($role === 'user')
                 <div class="col">
                     <a class="btn btn-primary btn-sm my-1 mr-sm-1" href="create" role="button"><i class="fas fa-plus"></i> Tambah Data</a>
                     <br>
                 </div>
-                @endif
             </div>
             <div>
                 <div class="col text-center">
@@ -87,10 +85,8 @@
                             <td></td>
                             <td></td>
                             <td>
-                                @if($role === 'user')
                                 <a class="btn btn-warning btn-sm edit-btn" href="update"></i>Edit</a>
                                 <a class="btn btn-danger btn-sm delete-btn" href="delete" onclick="showDeletePopup()"></i>Hapus</a>
-                                @endif
                             </td>
                         </tr>
                     </tbody>

@@ -16,7 +16,7 @@ class PenggunaController extends Controller
     public function index()
     {
         // Mengambil data pengguna dengan role "user" saja
-        $data_pengguna = User::where('role', 'user')->get();
+        $data_pengguna = User::all();
 
         return view('pengguna.index', compact('data_pengguna'));
     }
@@ -96,10 +96,6 @@ class PenggunaController extends Controller
         $rules['email'] = 'required|email|unique:users,email,'.$id;
     }
 
-    // Tambahkan aturan validasi untuk password jika diisi
-    if ($request->filled('password')) {
-        $rules['password'] = 'nullable|min:6';
-    }
 
     // Tambahkan aturan validasi untuk role jika diisi
     if ($request->filled('role')) {
@@ -133,9 +129,6 @@ class PenggunaController extends Controller
         $data_pengguna['jenisorganisasi'] = $request->jenisorganisasi;
     }
 
-    if ($request->filled('password')) {
-        $data_pengguna['password'] = Hash::make($request->input('password'));
-    }
 
     // Lakukan pembaruan data
     $pengguna->update($data_pengguna);

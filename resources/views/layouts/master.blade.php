@@ -8,6 +8,8 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="icon" href="/unand.png" type="image/png">
+
     <style>
         /* Background hijau untuk sidebar */
         .main-sidebar {
@@ -74,11 +76,11 @@
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <span class="dropdown-item dropdown-header">Profil</span>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" data-toggle="modal" data-target="#lihatprofile">
+                        <a href="/profil" class="dropdown-item">
                             <i class="fas fa-user mr-2"></i> Lihat Profil
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="/logout" class="dropdown-item">
+                        <a href="/logout" class="dropdown-item" onclick="showLogoutPopup()">
                             <i class="fas fa-sign-out-alt mr-2"></i> Logout
                         </a>
                     </div>
@@ -130,32 +132,8 @@
                                     <p>Home</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="/dokumen/index" class="nav-link">
-                                    <i class="nav-icon fas fa-layer-group"></i>
-                                    <p>
-                                        Dokumen
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/template/index" class="nav-link">
-                                    <i class="nav-icon fas fa-layer-group"></i>
-                                    <p>
-                                        Template
-                                    </p>
-                                </a>
-                            </li>
                         @endif
                         @endif
-                        <li class="nav-item">
-                            <a href="/kategori/index" class="nav-link">
-                                <i class="nav-icon fas fa-layer-group"></i>
-                                <p>
-                                    Kategori Surat
-                                </p>
-                            </a>
-                        </li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-mail-bulk"></i>
@@ -179,7 +157,30 @@
                                 </li>
                             </ul>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a href="/kategori/index" class="nav-link">
+                                <i class="nav-icon fas fa-layer-group"></i>
+                                <p>
+                                    Kategori Surat
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dokumen/index" class="nav-link">
+                                <i class="nav-icon fas fa-layer-group"></i>
+                                <p>
+                                    Dokumen
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/template/index" class="nav-link">
+                                <i class="nav-icon fas fa-layer-group"></i>
+                                <p>
+                                    Template
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -259,49 +260,9 @@
             });
         });
     </script>
-    <!-- Modal Profile -->
-    <div class="modal fade" id="lihatprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel"><i class="nav-icon fas fa-user my-1 btn-sm-1"></i>
-                        &nbsp;Profil Pengguna</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-3">
-                            <h5><label for="nama">Nama </label></h5>
-                        </div>
-                        <div class="col-9">
-                            <h5><label for="nama"> : {{auth()->user()->name}}</label></h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <h5><label for="nama">Email </label></h5>
-                        </div>
-                        <div class="col-9">
-                            <h5><label for="nama"> : {{auth()->user()->email}}</label></h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <h5><label for="nama">Level User </label></h5>
-                        </div>
-                        <div class="col-9">
-                            <h5><label for="nama"> : {{auth()->user()->role}}</label></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     </div>
     </div>
 </body>
 
 </html>
+

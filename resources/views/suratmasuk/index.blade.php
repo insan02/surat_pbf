@@ -75,12 +75,9 @@
                             <td></td>
                             <td></td>
                             <td>
-                                @if($role === 'user')
-                                    <!-- Tombol-tombol ACC, Tolak, dan Hapus hanya ditampilkan untuk peran user -->
                                     <a class="btn btn-success btn-sm acc-btn" href="#"></i>ACC</a>
                                     <a class="btn btn-warning btn-sm reject-btn" href="#"></i>Tolak</a>
-                                    <a class="btn btn-danger btn-sm delete-btn" href="#"></i>Hapus</a>
-                                @endif
+                                    <a class="btn btn-danger btn-sm delete-btn" href="#"></i>Hapus</a>  
                             </td>
                         </tr>
                     </tbody>
