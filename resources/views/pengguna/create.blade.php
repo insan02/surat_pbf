@@ -35,11 +35,6 @@
                     <label for="password">Password</label>
                     <input name="password" type="password" class="form-control bg-light" id="password"
                         placeholder="Password" required>
-                    <label for="role">Role</label>
-                    <select name="role" id="role" class="form-control bg-light" required>
-                        <option value="admin">Administrator</option>
-                        <option value="user">User</option>
-                    </select>
                     
                 </div>
             </div>

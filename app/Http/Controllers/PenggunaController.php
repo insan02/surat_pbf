@@ -16,7 +16,7 @@ class PenggunaController extends Controller
     public function index()
     {
         // Mengambil data pengguna dengan role "user" saja
-        $data_pengguna = User::all();
+        $data_pengguna = User::where('role', 'user')->get();
 
         return view('pengguna.index', compact('data_pengguna'));
     }
@@ -45,7 +45,6 @@ class PenggunaController extends Controller
             'jenisorganisasi' => 'required',
             'email' => 'required|unique:users|email',
             'password' => 'required|min:6',
-            'role' => 'required',
         ]);
 
         $pengguna = User::create([
@@ -54,10 +53,10 @@ class PenggunaController extends Controller
             'jenisorganisasi' => $request->jenisorganisasi,
             'email' => $request->email,
             'password' => Hash::make($request->input('password')),
-            'role' => $request->role,
+            'role' => 'user',
         ]);
 
-        return redirect()->route('pengguna.index')->with('sukses','Data Pengguna Berhasil Disimpan');
+        return redirect()->route('pengguna.index')->with('sukses','Data Pengguna Berhasil Ditambah');
     }
 
     /**

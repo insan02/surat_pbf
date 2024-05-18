@@ -65,16 +65,16 @@
                         <!-- small box -->
                         <div class="small-box bg-light">
                             <div class="inner">
-                                <h3>{{DB::table('users')->count()}}</h3>
+                                <h3>{{ DB::table('users')->where('role', 'user')->count() }}</h3>
                                 <p>Pengguna</p>
                             </div>
                             <div class="icon">
                                 <i class="nav-icon fas fa-user"></i>
                             </div>
-                            <a href="{{ route('pengguna.index') }}" class="small-box-footer bg-blue">Lihat Detail <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('pengguna.index') }}" class="small-box-footer bg-blue">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
+                    
                     @endif
                     <!-- ./col -->
                 </div>

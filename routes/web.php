@@ -22,7 +22,6 @@ Route::group(['middleware' => ['auth','checkRole:admin']], function () {
         return redirect('/dashboard'); // Mengarahkan pengguna admin langsung ke dashboard
     });
     Route::get('/dashboard','DashboardController@index')->name('dashboard');
-    Route::resource('/instansi','InstansiController');
     Route::resource('/pengguna','PenggunaController');
 });
 
@@ -44,6 +43,7 @@ Route::get('/profil/edit-password', 'ProfilController@editPassword')->name('edit
 
 // Rute untuk memproses update password
 Route::post('/profil/update-password', 'ProfilController@updatePassword')->name('update-password');
+Route::resource('/instansi','InstansiController');
 
 
     Route::get('/suratmasuk','SuratMasukController@index');

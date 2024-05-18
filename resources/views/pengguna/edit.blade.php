@@ -38,12 +38,6 @@
                         <option value="HIMA" @if ($data_pengguna->jenisorganisasi == 'HIMA') selected @endif>HIMA</option>
                     </select>
 
-                    <label for="role">Role</label>
-                    <select name="role" id="role" class="form-control bg-light" required>
-                        <option value="admin" @if ($data_pengguna->role == 'admin') selected @endif>Administrator
-                        </option>
-                        <option value="user" @if ($data_pengguna->role == 'user') selected @endif>User</option>
-                    </select>
                 </div>
             </div>
             <hr>

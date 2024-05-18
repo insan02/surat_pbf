@@ -1,136 +1,104 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Instansi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // Import Auth facade
 
 class InstansiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Instansi $instansi)
     {
-        $instansi = Instansi::all();
+        $userId = Auth::id();
+        $instansi = Instansi::where('user_id', $userId)->get();
         return view('instansi.index', compact('instansi'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('instansi.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
             'nama'     => 'required',
+            'alamat'   => 'required',
             'pimpinan' => 'required',
+            'email'    => 'required|email',
             'file'     => 'file|mimes:jpeg,png|max:2048',
         ]);
 
         $filelogo = $request->file;
-        $newlogo = time().$filelogo->getClientOriginalName();
+        $newlogo = time() . $filelogo->getClientOriginalName();
 
-        $ins = Instansi::create([
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
+        // Ensure user is authenticated and set the user_id
+        $userId = Auth::id();
+        if (!$userId) {
+            return redirect()->route('instansi.index')->with('error', 'User is not authenticated');
+        }
+
+        $instansi = Instansi::create([
+            'nama'     => $request->nama,
+            'alamat'   => $request->alamat,
             'pimpinan' => $request->pimpinan,
-            'email' => $request->email,
-            'file' => 'uploads/logo/'.$newlogo,
+            'email'    => $request->email,
+            'file'     => 'uploads/logo/' . $newlogo,
+            'user_id'  => $userId, // Set user_id to the ID of the logged-in user
         ]);
 
         $filelogo->move('uploads/logo/', $newlogo);
-        return redirect()->route('instansi.index')->with('sukses','Data Instansi Berhasil Disimpan');
 
+        return redirect()->route('instansi.index')->with('sukses', 'Data Instansi Berhasil Disimpan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $instansi= Instansi::findorfail($id);
+        $instansi = Instansi::findOrFail($id);
         return view('instansi.edit', compact('instansi'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'nama' => 'required',
+            'nama'     => 'required',
+            'alamat'   => 'required',
             'pimpinan' => 'required',
-            'email' => 'email|required',
-            'file' => 'file|mimes:jpeg,png|max:2048',
+            'email'    => 'required|email',
+            'file'     => 'file|mimes:jpeg,png|max:2048',
         ]);
 
-        $post = Instansi::findorfail($id);
+        $post = Instansi::findOrFail($id);
+
+        $post_data = [
+            'nama'     => $request->nama,
+            'alamat'   => $request->alamat,
+            'pimpinan' => $request->pimpinan,
+            'email'    => $request->email,
+        ];
 
         if ($request->has('file')) {
             $filelogo = $request->file;
-            $newlogo = time().$filelogo->getClientOriginalName();
+            $newlogo = time() . $filelogo->getClientOriginalName();
             $filelogo->move('uploads/logo/', $newlogo);
-
-            $post_data = [
-                'nama' => $request->nama,
-                'alamat' => $request->alamat,
-                'pimpinan' => $request->pimpinan,
-                'email' => $request->email,
-                'file' => 'uploads/logo/'.$newlogo,
-            ];
-        } else {
-            $post_data = [
-                'nama' => $request->nama,
-                'alamat' => $request->alamat,
-                'pimpinan' => $request->pimpinan,
-                'email' => $request->email,
-            ];
+            $post_data['file'] = 'uploads/logo/' . $newlogo;
         }
 
         $post->update($post_data);
 
-        return redirect()->route('instansi.index')->with('sukses','Data Instansi Berhasil di Update');
+        return redirect()->route('instansi.index')->with('sukses', 'Data Instansi Berhasil di Update');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
