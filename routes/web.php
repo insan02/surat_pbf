@@ -76,4 +76,6 @@ Route::post('/profil/update-password', 'ProfilController@updatePassword')->name(
     
     // untuk open file example template
     Route::get('/pdf-viewer', 'TemplateController@defaultTemplate')->name('pdf-viewer');
+    Route::post('/dokumen/edit-template', 'DokumenController@editTemplate');
+
 });
