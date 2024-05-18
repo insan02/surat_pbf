@@ -20,7 +20,7 @@
                         <!-- Tombol Upload dengan Event Listener untuk Tampilkan Popup -->
                         <button class="btn btn-primary btn-sm my-1 mr-sm-1" onclick="showUploadPopup()"><i class="fas fa-plus"></i>Upload</button>
                         <!-- Tombol Form Template dengan Event Listener untuk Tampilkan Popup Form Template -->
-                        <button class="btn btn-warning btn-sm my-1 mr-sm-1">Default Template</button>
+                        <button class="btn btn-warning btn-sm my-1 mr-sm-1" id="viewPdfBtn">Default Template</button>
                     </div>
                 </div>
             </div>
@@ -111,6 +111,11 @@
         // Setelah dokumen dihapus, Anda dapat menutup popup
         $('#deletePopup').modal('hide');
     }
+
+    
+    document.getElementById('viewPdfBtn').addEventListener('click', function() {
+            window.open('{{ route("pdf-viewer") }}', '_blank');
+        });
 </script>
 
 @endsection
