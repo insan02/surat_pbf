@@ -20,7 +20,11 @@ class CreateInstansisTable extends Migration
             $table->string('pimpinan');
             $table->string('email');
             $table->string('file');
+            $table->unsignedInteger('user_id'); // Add this line to create user_id column
             $table->timestamps();
+
+            // Add foreign key constraint
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

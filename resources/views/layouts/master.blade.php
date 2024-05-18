@@ -119,12 +119,6 @@
                                     <p>Manajemen Akun </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('instansi.index') }}" class="nav-link">
-                                    <i class="fas fa-warehouse nav-icon"></i>
-                                    <p>Profil Instansi</p>
-                                </a>
-                            </li>
                         @elseif (Auth::user()->role === 'user')
                             <li class="nav-item">
                                 <a href="/home" class="nav-link">
@@ -134,6 +128,12 @@
                             </li>
                         @endif
                         @endif
+                        <li class="nav-item">
+                            <a href="{{ route('instansi.index') }}" class="nav-link">
+                                <i class="fas fa-warehouse nav-icon"></i>
+                                <p>Profil Instansi</p>
+                            </a>
+                        </li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-mail-bulk"></i>
