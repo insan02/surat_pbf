@@ -7,6 +7,7 @@ use App\Imports\KategoriImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert; 
 
 class KategoriController extends Controller
 {
@@ -25,15 +26,27 @@ class KategoriController extends Controller
     //function untuk tambah
     public function tambah (Request $request)
     {
-        $request->validate([
-            'nama' => 'unique:kategori|min:5',
-            'uraian' => 'min:5',
-        ]);
-       $kategori = new Kategori();
-       $kategori->nama   = $request->input('nama');
-       $kategori->uraian = $request->input('uraian');
-       $kategori->save();
-       return redirect('/kategori/index')->with("sukses", "Data Kategori Berhasil Ditambahkan");
+        try {
+            $request->validate([
+                'nama' => 'unique:kategori|min:5',
+                'uraian' => 'min:5',
+            ]);
+            $kategori = new Kategori();
+            $kategori->nama = $request->input('nama');
+            $kategori->uraian = $request->input('uraian');
+            $kategori->save();
+
+            // Menggunakan SweetAlert untuk menampilkan notifikasi sukses
+            Alert::success('Berhasil', 'Data Kategori Berhasil Ditambahkan');
+
+            return redirect('/kategori/index')->with("sukses", "Data Kategori Berhasil Ditambahkan");
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Menampilkan pesan SweetAlert untuk kesalahan validasi
+            $errors = $e->validator->errors()->all();
+            Alert::error('Gagal', implode( $errors));
+
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        }
     }
 
     //function untuk masuk ke view edit
