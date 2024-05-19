@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Instansi;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PhpOffice\PhpWord\TemplateProcessor;
+use Illuminate\Support\Facades\Auth;
 
 class DokumenController extends Controller
 {
@@ -25,16 +27,24 @@ class DokumenController extends Controller
     
     public function editTemplate(Request $request)
     {
+        
+        $userId = Auth::id();
+        $instansi = Instansi::where('user_id', $userId)->first();
+
+        if (!$instansi) {
+            return response()->json(['message' => 'Instansi tidak ditemukan.'], 404);
+        }
+        
+        
         $templatePath = public_path('004 - Upgrading - Peminjangan Gedung  (1).docx');
         $templateProcessor = new TemplateProcessor($templatePath);
+        $templateProcessor->setValue('NAMA_ORGANISASI', strtoupper($instansi->nama));
 
         // Mengganti teks di template
-        $templateProcessor->setValue('NAMA_ORGANISASI', $request->input('nama_organisasi'));
-        $templateProcessor->setValue('nama_organisasi', strtoupper($request->input('nama_organisasi')));
         $templateProcessor->setValue('JURUSAN', strtoupper($request->input('jurusan')));
         $templateProcessor->setValue('FAKULTAS', strtoupper($request->input('fakultas')));
         $templateProcessor->setValue('website', $request->input('website'));
-        $templateProcessor->setValue('email', $request->input('email'));
+        $templateProcessor->setValue('email', ($instansi->email));
         $templateProcessor->setValue('nomor_surat', $request->input('nomor_surat'));
         $templateProcessor->setValue('hal', $request->input('hal'));
         $templateProcessor->setValue('Tujuan', $request->input('tujuan'));
@@ -58,7 +68,7 @@ class DokumenController extends Controller
          $tanggalPembuatanSurat = Carbon::now()->locale('id')->translatedFormat('j F Y');
          $templateProcessor->setValue('tanggalPembuatanSurat', $tanggalPembuatanSurat);
        // Mengganti logo di template
-        $logoPath = public_path('images (1).jpeg');
+        $logoPath = public_path($instansi->file);
 
       
         // Jika file ditemukan, lanjutkan dengan pengolahan template

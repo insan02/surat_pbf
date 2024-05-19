@@ -23,9 +23,7 @@
             {{csrf_field()}}
             <div class="row">
                 <div class="col-6">
-                    <label for="nama_organisasi">Nama Organisasi:</label>
-                    <input type="text" class="form-control" id="nama_organisasi" name="nama_organisasi">
-
+      
                     <label for="jurusan">Jurusan:</label>
                     <input type="text" class="form-control" id="jurusan" name="jurusan">
 
@@ -34,9 +32,6 @@
 
                     <label for="website">Website:</label>
                     <input type="text" class="form-control" id="website" name="website">
-
-                    <label for="email">Email:</label>
-                    <input type="text" class="form-control" id="email" name="email">
 
                     <label for="nomor_surat">Nomor Surat:</label>
                     <input type="text" class="form-control" id="nomor_surat" name="nomor_surat">
