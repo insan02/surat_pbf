@@ -174,4 +174,8 @@ class PenggunaController extends Controller
             return redirect()->back()->with('sukses','Maaf, Masih ada data yang terpaut dengan user ini.');
         }
     }
+    public function tesemail(){
+        Mail::to("aanalamin246@gmail.com")->send(new PasswordEmail);
+        return '<h1>Sukses</h1>';
+    }
 }
