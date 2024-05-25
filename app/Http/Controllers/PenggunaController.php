@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordEmail;
+use Illuminate\Support\Str;
 
 class PenggunaController extends Controller
 {
@@ -38,26 +41,43 @@ class PenggunaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-            'namaorganisasi' => 'required',
-            'jenisorganisasi' => 'required',
-            'email' => 'required|unique:users|email',
-            'password' => 'required|min:6',
-        ]);
+{
+    $this->validate($request, [
+        'name' => 'required|unique:users,name',
+        'namaorganisasi' => 'required|unique:users,namaorganisasi',
+        'jenisorganisasi' => 'required',
+        'email' => [
+            'required',
+            'unique:users,email',
+            'email',
+            'regex:/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/'
+        ],
+    ], [
+        'name.unique' => 'Nama pengguna sudah ada.',
+        'namaorganisasi.unique' => 'Nama organisasi sudah ada.',
+        'email.unique' => 'Email sudah ada.',
+        'email.regex' => 'Alamat email tidak valid.',
+    ]);
 
-        $pengguna = User::create([
-            'name' => $request->name,
-            'namaorganisasi' => $request->namaorganisasi,
-            'jenisorganisasi' => $request->jenisorganisasi,
-            'email' => $request->email,
-            'password' => Hash::make($request->input('password')),
-            'role' => 'user',
-        ]);
+    // Generate random password
+    $password = Str::random(8); // generate random 8 characters password
 
-        return redirect()->route('pengguna.index')->with('sukses','Data Pengguna Berhasil Ditambah');
-    }
+    $pengguna = User::create([
+        'name' => $request->name,
+        'namaorganisasi' => $request->namaorganisasi,
+        'jenisorganisasi' => $request->jenisorganisasi,
+        'email' => $request->email,
+        'password' => Hash::make($password), // Hash the password
+        'role' => 'user',
+    ]);
+
+    // Kirim email dengan password
+    Mail::to($request->email)->send(new PasswordEmail($password)); // assuming you have created PasswordEmail mailable
+
+    return redirect()->route('pengguna.index')->with('sukses', 'Data Pengguna Berhasil Ditambah');
+}
+
+
 
     /**
      * Show the form for editing the specified resource.
