@@ -21,8 +21,8 @@
                     <label for="penerima">Penerima</label>
                     <select name="penerima" id="penerima" class="form-control bg-light" required>
                         <option value="">Pilih Penerima</option>
-                        @foreach($users as $id => $name)
-                        <option value="{{ $id }}">{{ $name }}</option>
+                        @foreach($users as $id => $namaorganisasi)
+                        <option value="{{ $id }}">{{ $namaorganisasi }}</option>
                         @endforeach
                     </select>
 

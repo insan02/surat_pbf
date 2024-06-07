@@ -66,7 +66,7 @@ class DokumenController extends Controller
         $userId = Auth::id();
 
         // Ambil data penerima dari tabel User, kecuali pengguna yang sedang login
-        $users = User::where('id', '<>', $userId)->pluck('name', 'id');
+        $users = User::where('id', '<>', $userId)->pluck('namaorganisasi', 'id');
 
         return view('dokumen.createtemp', compact('users'));
     }
@@ -75,7 +75,7 @@ class DokumenController extends Controller
     {
         $userId = Auth::id();
         // Ambil semua data user dari tabel user kecuali pengguna yang sedang login
-        $users = User::where('id', '<>', $userId)->pluck('name', 'id');
+        $users = User::where('id', '<>', $userId)->pluck('namaorganisasi', 'id');
         $instansi = Instansi::where('user_id', $userId)->first();
 
         // Definisikan variabel $tujuanlist sebelum digunakan

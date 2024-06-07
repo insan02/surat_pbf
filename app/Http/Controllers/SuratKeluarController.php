@@ -30,7 +30,7 @@ class SuratKeluarController extends Controller
         $userId = Auth::id();
 
         // Ambil data penerima dari tabel User, kecuali pengguna yang sedang login
-        $users = User::where('id', '<>', $userId)->pluck('name', 'id');
+        $users = User::where('id', '<>', $userId)->pluck('namaorganisasi', 'id');
 
         // Ambil data jenis dari tabel Kategori
         $jenis = Kategori::pluck('nama', 'id');

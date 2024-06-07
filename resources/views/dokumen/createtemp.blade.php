@@ -41,8 +41,8 @@
 
                     <label for="tujuan">Tujuan:</label>
                     <select class="form-control" id="tujuan" name="tujuan">
-                        @foreach($users as $id => $nama)
-                            <option value="{{ $id }}">{{ $nama }}</option>
+                        @foreach($users as $id => $namaorganisasi)
+                            <option value="{{ $id }}">{{ $namaorganisasi }}</option>
                         @endforeach
                     </select>
 
