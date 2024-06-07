@@ -36,7 +36,7 @@
                 <hr />
             </div>
         </div>
-        <div>
+        {{-- <div>
             <div class="col text-center">
                 <div class="button-container">
                     <!-- Tombol Semua dengan Ikon Plus -->
@@ -53,7 +53,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row table-responsive">
             <div class="col">
                 <table class="table table-hover table-head-fixed" id='tabelSuratmasuk'>

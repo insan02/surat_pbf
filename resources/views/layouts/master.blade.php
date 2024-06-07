@@ -121,6 +121,14 @@
                                     <p>Manajemen Akun </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="/kategori/index" class="nav-link">
+                                    <i class="nav-icon fas fa-layer-group"></i>
+                                    <p>
+                                        Kategori Surat
+                                    </p>
+                                </a>
+                            </li>
                         @elseif (Auth::user()->role === 'user')
                             <li class="nav-item">
                                 <a href="/home" class="nav-link">
@@ -158,14 +166,6 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/kategori/index" class="nav-link">
-                                <i class="nav-icon fas fa-layer-group"></i>
-                                <p>
-                                    Kategori Surat
-                                </p>
-                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="/dokumen/index" class="nav-link">

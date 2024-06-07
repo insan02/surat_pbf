@@ -23,6 +23,14 @@ Route::group(['middleware' => ['auth','checkRole:admin']], function () {
     });
     Route::get('/dashboard','DashboardController@index')->name('dashboard');
     Route::resource('/pengguna','PenggunaController');
+
+    Route::get('/kategori', 'KategoriController@index');
+    Route::get('/kategori/index','KategoriController@index');
+    Route::get('/kategori/create','KategoriController@create');
+    Route::post('/kategori/tambah','KategoriController@tambah');
+    Route::get('/kategori/{id}/edit','KategoriController@edit');
+    Route::post('/kategori/{id}/update','KategoriController@update');
+    Route::get('/kategori/{id}/delete','KategoriController@delete');
 });
 
 Route::group(['middleware' => ['auth','checkRole:user']], function () {
@@ -36,14 +44,14 @@ Route::group(['middleware' => ['auth','checkRole:user']], function () {
 Route::group(['middleware' => ['auth','checkRole:admin,user']], function () {
 
     // Rute untuk menampilkan halaman profil
-Route::get('/profil', 'ProfilController@index')->name('profil');
+    Route::get('/profil', 'ProfilController@index')->name('profil');
 
-// Rute untuk menampilkan form edit password
-Route::get('/profil/edit-password', 'ProfilController@editPassword')->name('edit-password');
+    // Rute untuk menampilkan form edit password
+    Route::get('/profil/edit-password', 'ProfilController@editPassword')->name('edit-password');
 
-// Rute untuk memproses update password
-Route::post('/profil/update-password', 'ProfilController@updatePassword')->name('update-password');
-Route::resource('/instansi','InstansiController');
+    // Rute untuk memproses update password
+    Route::post('/profil/update-password', 'ProfilController@updatePassword')->name('update-password');
+    Route::resource('/instansi','InstansiController');
 
 
     Route::get('/suratmasuk','SuratMasukController@index');
@@ -59,23 +67,25 @@ Route::resource('/instansi','InstansiController');
     Route::post('/suratkeluar/{id}/update','SuratKeluarController@update');
     Route::get('/suratkeluar/{id}/delete','SuratKeluarController@delete');
 
-    Route::get('/kategori', 'KategoriController@index');
-    Route::get('/kategori/index','KategoriController@index');
-    Route::get('/kategori/create','KategoriController@create');
-    Route::post('/kategori/tambah','KategoriController@tambah');
-    Route::get('/kategori/{id}/edit','KategoriController@edit');
-    Route::post('/kategori/{id}/update','KategoriController@update');
-    Route::get('/kategori/{id}/delete','KategoriController@delete');
+    // Rute untuk menampilkan halaman index dokumen
+    Route::get('/dokumen/index', 'DokumenController@index')->name('dokumen.index');
 
-    Route::get('/dokumen','DokumenController@index');
-    Route::get('/dokumen/index','DokumenController@index');
-    Route::get('/dokumen/create','DokumenController@create');
-    Route::get('/dokumen/createtemp','DokumenController@createtemp');
+    // Rute untuk menampilkan form tambah dokumen
+    Route::get('/dokumen/create', 'DokumenController@create')->name('dokumen.create');
+
+    // Rute untuk memproses penambahan dokumen
+    Route::post('/dokumen', 'DokumenController@store')->name('dokumen.store');
+
+
+    Route::get('/dokumen/createtemp', 'DokumenController@createtemp')->name('dokumen.createtemp');
+    Route::delete('/dokumen/{dokumen}', 'DokumenController@destroy')->name('dokumen.delete');
+
     Route::get('/template/index','TemplateController@index');
 
-    
+    Route::get('/pdf-viewer', 'TemplateController@defaultTemplate')->name('pdf-viewer');
+
     // untuk open file example template
     Route::get('/pdf-viewer', 'TemplateController@defaultTemplate')->name('pdf-viewer');
-    Route::post('/dokumen/edit-template', 'DokumenController@editTemplate');
+    Route::post('/edit-template', 'DokumenController@editTemplate')->name('edit-template');
 
 });

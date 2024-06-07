@@ -17,7 +17,7 @@
             </ul>
         </div>
         @endif
-        <form action="edit-template" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('edit-template') }}" method="POST" enctype="multipart/form-data">
             <h3><i class="nav-icon fas fa-envelope-open-text my-1 btn-sm-1"></i> Tambah Dari Template</h3>
             <hr />
             {{csrf_field()}}
@@ -40,7 +40,11 @@
                     <input type="text" class="form-control" id="hal" name="hal">
 
                     <label for="tujuan">Tujuan:</label>
-                    <input type="text" class="form-control" id="tujuan" name="tujuan">
+                    <select class="form-control" id="tujuan" name="tujuan">
+                        @foreach($users as $id => $nama)
+                            <option value="{{ $id }}">{{ $nama }}</option>
+                        @endforeach
+                    </select>
 
                     <label for="nama_acara">Nama Acara:</label>
                     <input type="text" class="form-control" id="nama_acara" name="nama_acara">

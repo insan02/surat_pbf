@@ -20,13 +20,28 @@
                 <div class="col-6">
                     <label for="penerima">Penerima</label>
                     <select name="penerima" id="penerima" class="form-control bg-light" required>
-                        <option value=""></option>
-                        <option value=""></option>
+                        <option value="">Pilih Penerima</option>
+                        @foreach($users as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
                     </select>
-                    <label for="jenis">Jenis:</label>
-                        <input type="text" class="form-control" id="jenis" name="jenis">
-                    <label for="file">File:</label>
-                        <input type="file" class="form-control-file" id="file" name="file">
+
+                    <label for="jenis">Jenis</label>
+                    <select name="jenis" id="jenis" class="form-control bg-light" required>
+                        <option value="">Pilih Jenis</option>
+                        @foreach($jenis as $id => $nama)
+                        <option value="{{ $id }}">{{ $nama }}</option>
+                        @endforeach
+                    </select>
+
+                    <label for="file">File</label>
+                    <select name="file" id="file" class="form-control bg-light" required>
+                        <option value="">Pilih File</option>
+                        @foreach($files as $id => $nama)
+                        <option value="{{ $id }}">{{ $nama }}</option>
+                        @endforeach
+                    </select>
+
                     <label for="keterangan">Keterangan:</label>
                         <input type="text" class="form-control" id="keterangan" name="keterangan">
                 </div>

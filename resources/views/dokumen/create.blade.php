@@ -5,7 +5,7 @@
     <div class="box">
         @if(session('sukses'))
         <div class="alert alert-success" role="alert">
-            {{session('sukses')}}
+            {{ session('sukses') }}
         </div>
         @endif
         @if ($errors->any())
@@ -17,23 +17,22 @@
             </ul>
         </div>
         @endif
-        <form action="/dokumen/tambah" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dokumen.store') }}" method="POST" enctype="multipart/form-data">
             <h3><i class="nav-icon fas fa-envelope-open-text my-1 btn-sm-1"></i> Tambah Dokumen</h3>
             <hr />
-            {{csrf_field()}}
+            @csrf
             <div class="row">
                 <div class="col-6">
                     <label for="event">Event/Acara:</label>
-                        <input type="text" class="form-control" id="event" name="event">
+                    <input type="text" class="form-control" id="event" name="event">
                     <label for="file">Pilih File:</label>
-                        <input type="file" class="form-control-file" id="file" name="file">
+                    <input type="file" class="form-control-file" id="file" name="file">
                 </div>
             </div>
             <hr>
-            <button type="submit" class="btn btn-success btn-sm "><i class="fas fa-save"></i> SIMPAN</button>
-            <a class="btn btn-danger btn-sm" href="index" role="button"><i class="fas fa-undo"></i> BATAL</a>
+            <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-save"></i> SIMPAN</button>
+            <a class="btn btn-danger btn-sm" href="{{ route('dokumen.index') }}" role="button"><i class="fas fa-undo"></i> BATAL</a>
         </form>
-    </div>
     </div>
 </section>
 @endsection

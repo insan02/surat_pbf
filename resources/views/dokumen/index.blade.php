@@ -4,7 +4,7 @@
     <div class="box">
         @if(session('sukses'))
         <div class="alert alert-success" role="alert">
-            {{session('sukses')}}
+            {{ session('sukses') }}
         </div>
         @endif
         <div class="row">
@@ -17,11 +17,9 @@
             <div class="col">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <!-- Tombol Upload dengan Event Listener untuk Tampilkan Popup -->
-                        <a class="btn btn-primary btn-sm my-1 mr-sm-1" href="create" role="button"><i class="fas fa-plus"></i>
-                            Tambah Data</a>
-                        <a class="btn btn-warning btn-sm my-1 mr-sm-1" href="createtemp" role="button"><i class="fas fa-file"></i>
-                            From Template</a>
+                        <!-- Tombol Upload -->
+                        <a class="btn btn-primary btn-sm my-1 mr-sm-1" href="{{ route('dokumen.create') }}" role="button"><i class="fas fa-plus"></i> Tambah Data</a>
+                        <a class="btn btn-warning btn-sm my-1 mr-sm-1" href="{{ route('dokumen.createtemp') }}" role="button"><i class="fas fa-file"></i> From Template</a>
                     </div>
                 </div>
             </div>
@@ -39,14 +37,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <!-- Tombol Hapus dengan Event Listener untuk Tampilkan Popup Hapus -->
-                            <a class="btn btn-danger btn-sm delete-btn" href="#" onclick="showDeletePopup()"><i class="fas fa-trash-alt"></i>Hapus</a>
-                        </td>
-                        
+                        @foreach($dokumen as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->event }}</td>
+                            <td><a href="{{ asset('storage/public/dokumenpdf/' . $item->nama_dokumen) }}">{{ $item->nama_dokumen }}</a></td>
+                            <td>
+                                <!-- Tombol Hapus -->
+                                <button type="button" class="btn btn-danger btn-sm" onclick="showDeletePopup({{ $item->id }})"><i class="fas fa-trash-alt"></i> Hapus</button>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -54,8 +55,7 @@
     </div>
 </section>
 
-
-
+<!-- Popup untuk Hapus Dokumen -->
 <!-- Popup untuk Hapus Dokumen -->
 <div id="deletePopup" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -68,26 +68,35 @@
                 Apakah Anda yakin ingin menghapus dokumen?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="deleteDocument()">Ya</button>
+                <form id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" id="deleteUrl" name="deleteUrl" value="">
+                    <button type="submit" class="btn btn-danger">Ya</button>
+                </form>                               
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
             </div>
         </div>
     </div>
 </div>
 
-<script>
 
+<script>
     // Fungsi untuk Menampilkan Popup Hapus
-    function showDeletePopup() {
-        $('#deletePopup').modal('show');
-    }
+    function showDeletePopup(id) {
+    $('#deletePopup').modal('show');
+    $('#deleteForm').attr('action', '/dokumen/' + id);
+}
+
+
+
 
     // Fungsi untuk Menghapus Dokumen
     function deleteDocument() {
-        // Tambahkan logika untuk menghapus dokumen di sini
-        // Setelah dokumen dihapus, Anda dapat menutup popup
+        // Menutup pop-up
         $('#deletePopup').modal('hide');
     }
 </script>
+
 
 @endsection

@@ -7,6 +7,9 @@ use PDF;
 use Illuminate\Support\Facades\Auth;
 use Excel;
 use App\Instansi;
+use App\User;
+use App\Kategori;
+use App\Dokumen;
 
 class SuratKeluarController extends Controller
 {
@@ -23,8 +26,20 @@ class SuratKeluarController extends Controller
     //function untuk masuk ke view Tambah
     public function create()
     {
-        
-        return view('suratkeluar/create');
+        // Ambil ID pengguna yang sedang login
+        $userId = Auth::id();
+
+        // Ambil data penerima dari tabel User, kecuali pengguna yang sedang login
+        $users = User::where('id', '<>', $userId)->pluck('name', 'id');
+
+        // Ambil data jenis dari tabel Kategori
+        $jenis = Kategori::pluck('nama', 'id');
+
+        // Ambil data file dari tabel Dokumen sesuai dengan user yang sedang login
+        $userId = Auth::id();
+        $files = Dokumen::where('user_id', $userId)->pluck('nama_dokumen', 'id');
+
+        return view('suratkeluar.create', compact('users', 'jenis', 'files'));
     }
 
     //function untuk tambah
