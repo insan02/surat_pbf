@@ -71,8 +71,10 @@ class InstansiController extends Controller
 
     public function edit($id)
     {
+        $userId = Auth::id();
+        $user =  User::find($userId);
         $instansi = Instansi::findOrFail($id);
-        return view('instansi.edit', compact('instansi'));
+        return view('instansi.edit', compact('instansi', 'user'));
     }
 
     public function update(Request $request, $id)
@@ -93,7 +95,7 @@ class InstansiController extends Controller
             'pimpinan' => $request->pimpinan
         ];
         $updateDataUser = [
-            'nama'     => $request->nama,
+            'namaorganisasi'     => $request->nama,
             'email'    => $request->email,
         ];
         if ($request->has('file')) {
