@@ -67,8 +67,17 @@ class DokumenController extends Controller
 
         // Ambil data penerima dari tabel User, kecuali pengguna yang sedang login
         $users = User::where('id', '<>', $userId)->pluck('namaorganisasi', 'id');
+        
+        // Ambil jenis organisasi pengguna yang sedang login
+    $user = User::find($userId);
+    $jenisOrganisasi = $user->jenisorganisasi;
 
-        return view('dokumen.createtemp', compact('users'));
+    // Redirect ke view yang sesuai berdasarkan jenis organisasi
+        if ($jenisOrganisasi === "BEM") {
+            return view('dokumen.createtempBem', compact('users','user'));
+        } else{
+            return view('dokumen.createtemp', compact('users','user'));
+        }
     }
 
     public function editTemplate(Request $request)
