@@ -11,7 +11,7 @@
             <div class="card-body pt-0">
                 <div class="row">
                     <div class="col-9">
-                        <h3 class="font-weight-bold">{{ $item_ins->nama }}</h3>
+                        <h3 class="font-weight-bold">{{ $user->namaorganisasi }}</h3>
                         <ul class="ml-4 mb-0 fa-ul text-black">
                             <li class="my-3"><span class="fa-li"><i class="fas fa-lg fa-user-tie"></i></span>
                                 <h4>Pimpinan
@@ -22,7 +22,7 @@
                             </li>
                             <li><span class="fa-li"><i class="fas fa-lg fa-at"></i></span>
                                 <h4>Email
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $item_ins->email }}</h4>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $user->email }}</h4>
                             </li>
                         </ul>
                     </div>

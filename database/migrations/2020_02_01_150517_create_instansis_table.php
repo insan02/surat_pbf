@@ -15,10 +15,8 @@ class CreateInstansisTable extends Migration
     {
         Schema::create('instansis', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
             $table->string('alamat');
             $table->string('pimpinan');
-            $table->string('email');
             $table->string('file');
             $table->unsignedInteger('user_id'); // Add this line to create user_id column
             $table->timestamps();

@@ -17,7 +17,8 @@ class InstansiController extends Controller
     {
         $userId = Auth::id();
         $instansi = Instansi::where('user_id', $userId)->get();
-        return view('instansi.index', compact('instansi'));
+        $user = User::find($userId);
+        return view('instansi.index', compact('instansi', 'user'));
     }
 
     public function create()
@@ -47,10 +48,8 @@ class InstansiController extends Controller
         }
 
         $instansi = Instansi::create([
-            'nama'     => $request->nama,
             'alamat'   => $request->alamat,
             'pimpinan' => $request->pimpinan,
-            'email'    => $request->email,
             'file'     => 'uploads/logo/' . $newlogo,
             'user_id'  => $userId, // Set user_id to the ID of the logged-in user
         ]);
@@ -85,16 +84,18 @@ class InstansiController extends Controller
             'email'    => 'required|email',
             'file'     => 'file|mimes:jpeg,png|max:2048',
         ]);
-
+        $userId = Auth::id();
         $post = Instansi::findOrFail($id);
-
+        $dataUser = User::findOrFail($userId);
         $post_data = [
-            'nama'     => $request->nama,
+            
             'alamat'   => $request->alamat,
-            'pimpinan' => $request->pimpinan,
+            'pimpinan' => $request->pimpinan
+        ];
+        $updateDataUser = [
+            'nama'     => $request->nama,
             'email'    => $request->email,
         ];
-
         if ($request->has('file')) {
             $filelogo = $request->file;
             $newlogo = time() . $filelogo->getClientOriginalName();
@@ -103,6 +104,7 @@ class InstansiController extends Controller
         }
 
         $post->update($post_data);
+        $dataUser->update($updateDataUser);
 
         return redirect()->route('instansi.index')->with('sukses', 'Data Instansi Berhasil di Update');
     }

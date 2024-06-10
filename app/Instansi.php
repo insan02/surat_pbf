@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Instansi extends Model
 {
-    protected $fillable = ['nama','alamat','pimpinan','email','file', 'user_id'];
+    protected $fillable = ['alamat','pimpinan','file', 'user_id'];
 }
