@@ -20,7 +20,7 @@
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="name">Nama</label>
-                        <input name="name" type="text" class="form-control bg-light" id="name" placeholder="Nama" value="{{ old('name') }}" required>
+                        <input name="name" type="text" class="form-control bg-light" id="name" placeholder="Nama Pendek ex: HMSI" value="{{ old('name') }}" required>
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif

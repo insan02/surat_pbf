@@ -25,7 +25,7 @@
                 <div class="col-6">
                     <label for="nama">Nama Instansi</label>
                     <input name="nama" type="text" class="form-control bg-light" id="nama" placeholder="Nama Instansi"
-                        required>
+                        value="{{ $user->namaorganisasi ?? '' }}" required>                    
                     <label for="alamat">Alamat</label>
                     <textarea name="alamat" class="form-control bg-light" id="alamat" rows="3" placeholder="Alamat"
                         required></textarea>
@@ -36,7 +36,7 @@
                         placeholder="Nama Pimpinan" required>
                     <label for="email">Email Instansi</label>
                     <input name="email" type="email" class="form-control bg-light" id="email"
-                        placeholder="Email Instansi" required>
+                        placeholder="Email Instansi" value="{{ $user->email ?? '' }}" required>
                     <div class="form-group">
                         <label for="exampleFormControlFile1">File</label>
                         <input name="file" type="file" class="form-control-file" id="exampleFormControlFile1" required>

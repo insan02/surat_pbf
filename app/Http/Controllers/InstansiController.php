@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Instansi;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Import Auth facade
 
@@ -21,7 +22,9 @@ class InstansiController extends Controller
 
     public function create()
     {
-        return view('instansi.create');
+        $userId = Auth::id();
+        $user =  User::find($userId);
+        return view('instansi.create', compact('user'));
     }
 
     public function store(Request $request)
@@ -53,7 +56,12 @@ class InstansiController extends Controller
         ]);
 
         $filelogo->move('uploads/logo/', $newlogo);
-
+        $post = User::findOrFail($userId);
+        $post_data = [
+            'namaorganisasi' =>$request->nama,
+            'email'    => $request->email,
+        ];
+        $post -> update($post_data);
         return redirect()->route('instansi.index')->with('sukses', 'Data Instansi Berhasil Disimpan');
     }
 
