@@ -173,9 +173,15 @@ class DokumenController extends Controller
                 $hal = $request->input('hal');
                 $tujuan = $request->input('tujuan');
                 $namaAcara = $request->input('nama_acara');
-                $outputFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $hal) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $tujuan) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $namaAcara) . '_edited_template.docx';
-                $outputPath = storage_path('app/public/' . $outputFilename);
+                $outputFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $hal) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $tujuan) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $namaAcara) . '.docx';
+                $outputPath = public_path('storage/public/dokumenpdf/' . $outputFilename);
                 $templateProcessor->saveAs($outputPath);
+
+                Dokumen::create([
+                    'event' => $namaAcara,
+                    'nama_dokumen' => $outputFilename,
+                    'user_id' => Auth::id(),
+                ]);
 
                 return response()->download($outputPath);
 
@@ -239,10 +245,15 @@ class DokumenController extends Controller
             $hal = $request->input('hal');
             $tujuan = $request->input('tujuan');
             $namaAcara = $request->input('nama_acara');
-            $outputFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $hal) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $tujuan) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $namaAcara) . '_edited_template.docx';
-            $outputPath = storage_path('app/public/' . $outputFilename);
+            $outputFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $hal) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $tujuan) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $namaAcara) . '.docx';
+            $outputPath = public_path('storage/public/dokumenpdf/' . $outputFilename);
             $templateProcessor->saveAs($outputPath);
 
+            Dokumen::create([
+                'event' => $namaAcara,
+                'nama_dokumen' => $outputFilename,
+                'user_id' => Auth::id(),
+            ]);
             return response()->download($outputPath);
             
         } else {
