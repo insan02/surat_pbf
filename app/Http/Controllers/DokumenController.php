@@ -69,10 +69,10 @@ class DokumenController extends Controller
         $users = User::where('id', '<>', $userId)->pluck('namaorganisasi', 'id');
         
         // Ambil jenis organisasi pengguna yang sedang login
-    $user = User::find($userId);
-    $jenisOrganisasi = $user->jenisorganisasi;
+        $user = User::find($userId);
+        $jenisOrganisasi = $user->jenisorganisasi;
 
-    // Redirect ke view yang sesuai berdasarkan jenis organisasi
+        // Redirect ke view yang sesuai berdasarkan jenis organisasi
         if ($jenisOrganisasi === "BEM") {
             return view('dokumen.createtempBem', compact('users','user'));
         } else{
@@ -97,87 +97,92 @@ class DokumenController extends Controller
 
         if ($jenisOrganisasi === "BEM") {
            
-        $templatePath = public_path('template_suratBem.docx');
-        $templateProcessor = new TemplateProcessor($templatePath);
-        $templateProcessor->setValue('NAMA_ORGANISASI', strtoupper($instansi->nama));
-        
-        // Mengganti teks di template
-        $fakultas = $request->input('fakultas');
-        if (empty($fakultas)) {
-            $templateProcessor->setValue('SEBUTAN', strtoupper($request->input('sebutan')));
-            $templateProcessor->setValue('FAKULTAS', "");
-        } else {
-            $sebutan1 = strtoupper($request->input('sebutan')) . '<w:br />';
-            $templateProcessor->setValue('SEBUTAN', $sebutan1);
-            $templateProcessor->setValue('FAKULTAS', strtoupper($fakultas));
-           
-        }
-        $templateProcessor->setValue('website', $request->input('website'));
-        $templateProcessor->setValue('alamat', ($instansi->alamat));
-        $templateProcessor->setValue('email', ($instansi->email));
-        $templateProcessor->setValue('nomor_surat', $request->input('nomor_surat'));
-        $templateProcessor->setValue('hal', $request->input('hal'));
-
-        $tujuanlist = $users;
-        $templateProcessor->setValue('Tujuan', $request->input('tujuan'));
-
-        $templateProcessor->setValue('nama_acara', $request->input('nama_acara'));
-        $templateProcessor->setValue('Jam_Mulai', $request->input('jam_mulai'));
-        $templateProcessor->setValue('jam_selesai', $request->input('jam_selesai'));
-        $templateProcessor->setValue('lokasi', $request->input('lokasi'));
-        $templateProcessor->setValue('nama_ketua', $request->input('nama_ketua'));
-        $templateProcessor->setValue('nim_ketua', $request->input('nim_ketua'));
-        $templateProcessor->setValue('nama_sekre', $request->input('nama_sekre'));
-        $templateProcessor->setValue('nim_sekre', $request->input('nim_sekre'));
-        $templateProcessor->setValue('name', ($user->name));
-
-        $templateProcessor->setValue('pimpinan', $request->input('jabatan_pimpinan'));
-        $templateProcessor->setValue('nama_pimpinan', $request->input('nama_pimpinan'));
-        $templateProcessor->setValue('nip', $request->input('nip'));
-
-        // Memproses input tanggal untuk mendapatkan hari dan tanggal dalam format yang diinginkan
-        $inputTanggal = Carbon::parse($request->input('hari_tanggal'));
-        $hariTanggal = $inputTanggal->locale('id')->translatedFormat('l / j F Y');
-        $templateProcessor->setValue('hari/tanggal', $hariTanggal);
-
-        // Mengganti placeholder tanggal pembuatan surat dengan tanggal saat ini
-        $tanggalPembuatanSurat = Carbon::now()->locale('id')->translatedFormat('j F Y');
-        $templateProcessor->setValue('tanggalPembuatanSurat', $tanggalPembuatanSurat);
-
-        // Mengganti logo di template
-        $logoPath = public_path($instansi->file);
-
-        // Jika file ditemukan, lanjutkan dengan pengolahan template
-        if (file_exists($logoPath)) {
-
-            // Menetapkan nilai gambar untuk placeholder 'logo' dalam template
-            $imageOptions = array(
-                'path' => $logoPath,
-                'wrappingStyle' => 'infront', // Menjaga rasio aspek gambar
-            );
-        
-            // Jika $fakultas tidak kosong, atur ukuran gambar ke 100x100 piksel
-            if (!empty($fakultas)) {
-                $imageOptions['width'] = 100;  // Lebar dalam satuan piksel
-                $imageOptions['height'] = 100; // Tinggi dalam satuan piksel
-                $imageOptions['ratio'] = true; // Menjaga rasio aspek gambar
-            } else {
-                // Jika $fakultas kosong, atur ukuran gambar kecil
-                $imageOptions['width'] = 90;   // Lebar dalam satuan piksel
-                $imageOptions['height'] = 90;  // Tinggi dalam satuan piksel
-                $imageOptions['ratio'] = true; // Menjaga rasio aspek gambar
-            }
-        
-            $templateProcessor->setImageValue('logo', $imageOptions);
-            // Menyimpan dokumen yang telah diubah
-            $outputPath = storage_path('app/public/' . time() . '_edited_template.docx');
-            $templateProcessor->saveAs($outputPath);
-
-            return response()->download($outputPath);
+            $templatePath = public_path('template_suratBem.docx');
+            $templateProcessor = new TemplateProcessor($templatePath);
+            $templateProcessor->setValue('NAMA_ORGANISASI', strtoupper($instansi->nama));
             
-        } else {
-            echo "Tidak dapat melanjutkan karena file gambar tidak ditemukan.";
-        }
+            // Mengganti teks di template
+            $fakultas = $request->input('fakultas');
+            if (empty($fakultas)) {
+                $templateProcessor->setValue('SEBUTAN', strtoupper($request->input('sebutan')));
+                $templateProcessor->setValue('FAKULTAS', "");
+            } else {
+                $sebutan1 = strtoupper($request->input('sebutan')) . '<w:br />';
+                $templateProcessor->setValue('SEBUTAN', $sebutan1);
+                $templateProcessor->setValue('FAKULTAS', strtoupper($fakultas));
+            
+            }
+            $templateProcessor->setValue('website', $request->input('website'));
+            $templateProcessor->setValue('alamat', ($instansi->alamat));
+            $templateProcessor->setValue('email', ($user->email));
+            $templateProcessor->setValue('nomor_surat', $request->input('nomor_surat'));
+            $templateProcessor->setValue('hal', $request->input('hal'));
+
+            $tujuanlist = $users;
+            $templateProcessor->setValue('Tujuan', $request->input('tujuan'));
+
+            $templateProcessor->setValue('nama_acara', $request->input('nama_acara'));
+            $templateProcessor->setValue('Jam_Mulai', $request->input('jam_mulai'));
+            $templateProcessor->setValue('jam_selesai', $request->input('jam_selesai'));
+            $templateProcessor->setValue('lokasi', $request->input('lokasi'));
+            $templateProcessor->setValue('nama_ketua', $request->input('nama_ketua'));
+            $templateProcessor->setValue('nim_ketua', $request->input('nim_ketua'));
+            $templateProcessor->setValue('nama_sekre', $request->input('nama_sekre'));
+            $templateProcessor->setValue('nim_sekre', $request->input('nim_sekre'));
+            $templateProcessor->setValue('name', ($user->name));
+
+            $templateProcessor->setValue('Pimpinan', $request->input('jabatan_pimpinan'));
+            $templateProcessor->setValue('nama_pimpinan', $request->input('nama_pimpinan'));
+            $templateProcessor->setValue('nip', $request->input('nip'));
+
+            // Memproses input tanggal untuk mendapatkan hari dan tanggal dalam format yang diinginkan
+            $inputTanggal = Carbon::parse($request->input('hari_tanggal'));
+            $hariTanggal = $inputTanggal->locale('id')->translatedFormat('l / j F Y');
+            $templateProcessor->setValue('hari/tanggal', $hariTanggal);
+
+            // Mengganti placeholder tanggal pembuatan surat dengan tanggal saat ini
+            $tanggalPembuatanSurat = Carbon::now()->locale('id')->translatedFormat('j F Y');
+            $templateProcessor->setValue('tanggalPembuatanSurat', $tanggalPembuatanSurat);
+
+            // Mengganti logo di template
+            $logoPath = public_path($instansi->file);
+
+            // Jika file ditemukan, lanjutkan dengan pengolahan template
+            if (file_exists($logoPath)) {
+
+                // Menetapkan nilai gambar untuk placeholder 'logo' dalam template
+                $imageOptions = array(
+                    'path' => $logoPath,
+                    'wrappingStyle' => 'infront', // Menjaga rasio aspek gambar
+                );
+            
+                // Jika $fakultas tidak kosong, atur ukuran gambar ke 100x100 piksel
+                if (!empty($fakultas)) {
+                    $imageOptions['width'] = 100;  // Lebar dalam satuan piksel
+                    $imageOptions['height'] = 100; // Tinggi dalam satuan piksel
+                    $imageOptions['ratio'] = true; // Menjaga rasio aspek gambar
+                } else {
+                    // Jika $fakultas kosong, atur ukuran gambar kecil
+                    $imageOptions['width'] = 90;   // Lebar dalam satuan piksel
+                    $imageOptions['height'] = 90;  // Tinggi dalam satuan piksel
+                    $imageOptions['ratio'] = true; // Menjaga rasio aspek gambar
+                }
+            
+                $templateProcessor->setImageValue('logo', $imageOptions);
+                // Mengganti nama file berdasarkan input user
+                $hal = $request->input('hal');
+                $tujuan = $request->input('tujuan');
+                $namaAcara = $request->input('nama_acara');
+                $outputFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $hal) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $tujuan) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $namaAcara) . '_edited_template.docx';
+                $outputPath = storage_path('app/public/' . $outputFilename);
+                $templateProcessor->saveAs($outputPath);
+
+                return response()->download($outputPath);
+
+                
+            } else {
+                echo "Silahkan upload logo terlebih dahulu di halaman instansi.";
+            }
         } else{
         
         $templatePath = public_path('004 - Upgrading - Peminjangan Gedung  (1).docx');
@@ -231,13 +236,17 @@ class DokumenController extends Controller
             ));
 
             // Menyimpan dokumen yang telah diubah
-            $outputPath = storage_path('app/public/' . time() . '_edited_template.docx');
+            $hal = $request->input('hal');
+            $tujuan = $request->input('tujuan');
+            $namaAcara = $request->input('nama_acara');
+            $outputFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $hal) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $tujuan) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $namaAcara) . '_edited_template.docx';
+            $outputPath = storage_path('app/public/' . $outputFilename);
             $templateProcessor->saveAs($outputPath);
 
             return response()->download($outputPath);
             
         } else {
-            echo "Tidak dapat melanjutkan karena file gambar tidak ditemukan.";
+            echo "Silahkan upload logo terlebih dahulu di halaman instansi.";
         }
     }
     }
