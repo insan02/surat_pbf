@@ -22,12 +22,13 @@ class TemplateController extends Controller
         }
 
     $jenisOrganisasi = $user->jenisorganisasi;
-
+     
     // Redirect ke view yang sesuai berdasarkan jenis organisasi
         if ($jenisOrganisasi === "BEM") {
             $filePath = public_path('templateBem.pdf');
             
             if (file_exists($filePath)) {
+                
                 return response()->file($filePath);
             } else {
                 return response()->json(['message' => 'File PDF tidak ditemukan.'], 404);
