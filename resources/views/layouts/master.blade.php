@@ -102,89 +102,74 @@
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
 
                         @if (Auth::check())
-                        @if (Auth::user()->role === 'admin')
-                            <li class="nav-item">
-                                <a href="/dashboard" class="nav-link">
-                                    <i class="nav-icon fas fa-home"></i>
-                                    <p>Dashboard</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('pengguna.index') }}" class="nav-link">
-                                    <i class="fas fa-users-cog nav-icon"></i>
-                                    <p>Manajemen Akun </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/kategori/index" class="nav-link">
-                                    <i class="nav-icon fas fa-layer-group"></i>
-                                    <p>
-                                        Kategori Surat
-                                    </p>
-                                </a>
-                            </li>
-                        @elseif (Auth::user()->role === 'user')
-                            <li class="nav-item">
-                                <a href="/home" class="nav-link">
-                                    <i class="nav-icon fas fa-home"></i>
-                                    <p>Home</p>
-                                </a>
-                            </li>
+                            @if (Auth::user()->role === 'admin')
+                                <li class="nav-item">
+                                    <a href="/dashboard" class="nav-link">
+                                        <i class="nav-icon fas fa-home"></i>
+                                        <p>Dashboard</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('pengguna.index') }}" class="nav-link">
+                                        <i class="fas fa-users-cog nav-icon"></i>
+                                        <p>Manajemen Akun</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/kategori/index" class="nav-link">
+                                        <i class="nav-icon fas fa-layer-group"></i>
+                                        <p>Kategori Surat</p>
+                                    </a>
+                                    <hr>
+                                </li>
+                            @elseif (Auth::user()->role === 'user')
+                                <li class="nav-item">
+                                    <a href="/home" class="nav-link">
+                                        <i class="nav-icon fas fa-home"></i>
+                                        <p>Home</p>
+                                    </a>
+                                </li>
+                            @endif
                         @endif
-                        @endif
+
                         <li class="nav-item">
                             <a href="{{ route('instansi.index') }}" class="nav-link">
                                 <i class="fas fa-warehouse nav-icon"></i>
                                 <p>Profil Instansi</p>
                             </a>
                         </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-mail-bulk"></i>
-                                <p>
-                                    Transaksi Surat
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/suratmasuk/index" class="nav-link">
-                                        <i class="far fa-envelope nav-icon"></i>
-                                        <p>Surat Masuk</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/suratkeluar/index" class="nav-link">
-                                        <i class="far fa-envelope-open nav-icon"></i>
-                                        <p>Surat Keluar</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
                         <li class="nav-item">
                             <a href="/dokumen/index" class="nav-link">
-                                <i class="nav-icon fas fa-layer-group"></i>
-                                <p>
-                                    Dokumen
-                                </p>
+                                <i class="nav-icon fas fa-file-alt"></i>
+                                <p>Dokumen</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/template/index" class="nav-link">
                                 <i class="nav-icon fas fa-layer-group"></i>
-                                <p>
-                                    Template
-                                </p>
+                                <p>Template</p>
+                            </a>
+                            <hr>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/suratmasuk/index" class="nav-link">
+                                <i class="far fa-envelope nav-icon"></i>
+                                <p>Surat Masuk</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/suratkeluar/index" class="nav-link">
+                                <i class="far fa-envelope-open nav-icon"></i>
+                                <p>Surat Keluar</p>
                             </a>
                         </li>
                     </ul>
                 </nav>
+
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->

@@ -15,8 +15,14 @@ class CreateSuratkeluarTable extends Migration
     {
         Schema::create('suratkeluar', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis');
-            $table->text('detail')->nullable();
+            $table->unsignedBigInteger('dokumen_id');
+            $table->foreign('dokumen_id')->references('id')->on('dokumen');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedInteger('kategori_id');
+            $table->foreign('kategori_id')->references('id')->on('kategori');
+            $table->string('penerima');
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -31,3 +37,4 @@ class CreateSuratkeluarTable extends Migration
         Schema::dropIfExists('suratkeluar');
     }
 }
+

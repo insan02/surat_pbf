@@ -54,18 +54,22 @@ Route::group(['middleware' => ['auth','checkRole:admin,user']], function () {
     Route::resource('/instansi','InstansiController');
 
 
-    Route::get('/suratmasuk','SuratMasukController@index');
-    Route::get('/suratmasuk/index','SuratMasukController@index');
+    
+    Route::get('/suratmasuk/index','TransaksiSuratController@indexSuratMasuk')->name('suratmasuk.index');
+    Route::get('/suratmasuk/download/{id}', 'TransaksiSuratController@tampilSuratMasuk')->name('suratmasuk.download');
+    Route::post('/suratmasuk/reply', 'TransaksiSuratController@reply')->name('suratmasuk.reply');
+    Route::get('/suratmasuk/delete/{id}', 'TransaksiSuratController@deleteSuratMasuk')->name('suratmasuk.delete');
 
-    Route::get('/suratkeluar', 'SuratKeluarController@index');
-    Route::get('/suratkeluar/index','SuratKeluarController@index');
-    Route::get('/suratkeluar/create','SuratKeluarController@create');
-    Route::post('/suratkeluar/tambah','SuratKeluarController@tambah');
-    Route::get('/suratkeluar/{id}/tampil','SuratKeluarController@tampil');
-    Route::get('viewAlldownloadfile','SuratKeluarController@downfunc');
-    Route::get('/suratkeluar/{id}/edit','SuratKeluarController@edit');
-    Route::post('/suratkeluar/{id}/update','SuratKeluarController@update');
-    Route::get('/suratkeluar/{id}/delete','SuratKeluarController@delete');
+
+
+    // routes/web.php
+    Route::get('/suratkeluar/index', 'TransaksiSuratController@indexSuratKeluar')->name('suratkeluar.index');
+    Route::get('/suratkeluar/create', 'TransaksiSuratController@createSuratKeluar')->name('suratkeluar.create');
+    Route::post('/suratkeluar/tambah', 'TransaksiSuratController@tambahSuratKeluar')->name('suratkeluar.tambah');
+    Route::get('/suratkeluar/{id}/tampil', 'TransaksiSuratController@tampilSuratKeluar')->name('suratkeluar.tampil');
+    Route::get('/suratkeluar/edit/{id}', 'TransaksiSuratController@editSuratKeluar')->name('suratkeluar.edit');
+    Route::put('/suratkeluar/update/{id}', 'TransaksiSuratController@updateSuratKeluar')->name('suratkeluar.update');
+    Route::get('/suratkeluar/{id}/delete', 'TransaksiSuratController@deleteSuratKeluar')->name('suratkeluar.delete');
 
     // Rute untuk menampilkan halaman index dokumen
     Route::get('/dokumen/index', 'DokumenController@index')->name('dokumen.index');

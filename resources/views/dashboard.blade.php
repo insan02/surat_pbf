@@ -20,31 +20,15 @@
                         <!-- small box -->
                         <div class="small-box bg-light">
                             <div class="inner">
-                                <h3>{{DB::table('suratmasuk')->count()}}</h3>
-                                <p>Surat Masuk</p>
+                                <h3>{{DB::table('transaksi_surat')->count()}}</h3>
+                                <p>Transaksi Surat</p>
                             </div>
                             <div class="icon">
                                 <i class="nav-icon fas fa-envelope-open-text"></i>
                             </div>
-                            <a href="/suratmasuk/index" class="small-box-footer bg-blue">Lihat Detail <i
-                                    class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-light">
-                            <div class="inner">
-                                <h3>{{DB::table('suratkeluar')->count()}}</h3>
-                                <p>Surat Keluar</p>
-                            </div>
-                            <div class="icon">
-                                <i class="nav-icon fas fa-envelope"></i>
-                            </div>
-                            <a href="/suratkeluar/index" class="small-box-footer bg-blue">Lihat Detail <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-light">
@@ -53,30 +37,26 @@
                                 <p>Kategori</p>
                             </div>
                             <div class="icon">
-                                <i class="nav-icon fas fa-layer-group"></i>
+                                <i class="nav-icon fas fa-envelope"></i>
                             </div>
-                            <a href="/kategori/index" class="small-box-footer bg-blue">Lihat Detail <i
-                                    class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <!-- ./col -->
+
                     @if (auth()->user()->role == 'admin')
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-light">
                             <div class="inner">
-                                <h3>{{ DB::table('users')->where('role', 'user')->count() }}</h3>
+                                <h3>{{DB::table('users')->count()}}</h3>
                                 <p>Pengguna</p>
                             </div>
                             <div class="icon">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-layer-group"></i>
                             </div>
-                            <a href="{{ route('pengguna.index') }}" class="small-box-footer bg-blue">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    
                     @endif
-                    <!-- ./col -->
+        
                 </div>
             </div>
         </div>
