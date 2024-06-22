@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth','checkRole:admin,user']], function () {
     Route::get('/suratmasuk/download/{id}', 'TransaksiSuratController@tampilSuratMasuk')->name('suratmasuk.download');
     Route::post('/suratmasuk/reply', 'TransaksiSuratController@reply')->name('suratmasuk.reply');
     Route::get('/suratmasuk/delete/{id}', 'TransaksiSuratController@deleteSuratMasuk')->name('suratmasuk.delete');
+    
 
 
 

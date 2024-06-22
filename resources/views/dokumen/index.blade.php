@@ -41,7 +41,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->event }}</td>
-                            <td><a href="{{ asset('storage/public/dokumenpdf/' . $item->nama_dokumen) }}">{{ $item->nama_dokumen }}</a></td>
+                            <td><a href="{{ Storage::url('public/dokumenpdf/' . $item->nama_dokumen) }}">{{ $item->nama_dokumen }}</a></td>
                             <td>
                                 <!-- Tombol Hapus -->
                                 <button type="button" class="btn btn-danger btn-sm" onclick="showDeletePopup({{ $item->id }})"><i class="fas fa-trash-alt"></i> Hapus</button>

@@ -112,17 +112,17 @@ public function updateSuratKeluar(Request $request, $id)
     }
 
     public function tampilSuratKeluar($id)
-    {
-        $transaksiSurat = TransaksiSurat::findOrFail($id);
-        $namaFile = $transaksiSurat->dokumen->nama_dokumen;
-        $filePath = public_path('storage/public/dokumenpdf/' . $namaFile);
+{
+    $transaksiSurat = TransaksiSurat::findOrFail($id);
+    $namaFile = $transaksiSurat->dokumen->nama_dokumen;
+    $filePath = public_path('storage/dokumenpdf/' . $namaFile);
 
-        if (!file_exists($filePath)) {
-            abort(404, 'File not found.');
-        }
-
-        return response()->download($filePath, $namaFile);
+    if (!file_exists($filePath)) {
+        abort(404, 'File not found.');
     }
+
+    return response()->download($filePath, $namaFile);
+}
 
     public function indexSuratMasuk()
 {
@@ -136,17 +136,17 @@ public function updateSuratKeluar(Request $request, $id)
 }
 
 public function tampilSuratMasuk($id)
-    {
-        $transaksiSurat = TransaksiSurat::findOrFail($id);
-        $namaFile = $transaksiSurat->dokumen->nama_dokumen;
-        $filePath = public_path('storage/public/dokumenpdf/' . $namaFile);
+{
+    $transaksiSurat = TransaksiSurat::findOrFail($id);
+    $namaFile = $transaksiSurat->dokumen->nama_dokumen;
+    $filePath = public_path('storage/dokumenpdf/' . $namaFile);
 
-        if (!file_exists($filePath)) {
-            abort(404, 'File not found.');
-        }
-
-        return response()->download($filePath, $namaFile);
+    if (!file_exists($filePath)) {
+        abort(404, 'File not found.');
     }
+
+    return response()->download($filePath, $namaFile);
+}
 
     public function reply(Request $request)
     {

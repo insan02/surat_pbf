@@ -26,27 +26,28 @@ class DokumenController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'event' => 'required|string|max:255',
-            'file' => 'required|mimes:pdf|max:2048',
-        ]);
+{
+    // Validasi input
+    $request->validate([
+        'event' => 'required|string|max:255',
+        'file' => 'required|mimes:pdf|max:2048',
+    ]);
 
-        // Simpan file ke storage
-        $file = $request->file('file');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path('storage/public/dokumenpdf/'), $filename);
+    // Simpan file ke storage
+    $file = $request->file('file');
+    $filename = time() . '_' . $file->getClientOriginalName();
+    $path = $file->storeAs('public/dokumenpdf', $filename);
 
-        // Buat dokumen baru
-        Dokumen::create([
-            'event' => $request->event,
-            'nama_dokumen' => $filename,
-            'user_id' => Auth::id(),
-        ]);
+    // Buat dokumen baru
+    Dokumen::create([
+        'event' => $request->event,
+        'nama_dokumen' => $filename,
+        'user_id' => Auth::id(),
+    ]);
 
-        return redirect()->route('dokumen.index')->with('sukses', 'Dokumen berhasil ditambahkan.');
-    }
+    return redirect()->route('dokumen.index')->with('sukses', 'Dokumen berhasil ditambahkan.');
+}
+
 
     public function destroy(Dokumen $dokumen)
     {
