@@ -71,8 +71,11 @@ class DokumenController extends Controller
         
         // Ambil jenis organisasi pengguna yang sedang login
         $user = User::find($userId);
+        $instansi = Instansi::where('user_id', $userId)->first();
+        if(!$instansi){
+            return redirect()->back()->with('peringatan', 'Silakan isi Profil instansi terlebih dahulu.');
+         }
         $jenisOrganisasi = $user->jenisorganisasi;
-
         // Redirect ke view yang sesuai berdasarkan jenis organisasi
         if ($jenisOrganisasi === "BEM") {
             return view('dokumen.createtempBem', compact('users','user'));
@@ -126,7 +129,7 @@ class DokumenController extends Controller
             $templateProcessor->setValue('Jam_Mulai', $request->input('jam_mulai'));
             $templateProcessor->setValue('jam_selesai', $request->input('jam_selesai'));
             $templateProcessor->setValue('lokasi', $request->input('lokasi'));
-            $templateProcessor->setValue('nama_ketua', $request->input('nama_ketua'));
+            $templateProcessor->setValue('nama_ketua', $instansi->pimpinan);
             $templateProcessor->setValue('nim_ketua', $request->input('nim_ketua'));
             $templateProcessor->setValue('nama_sekre', $request->input('nama_sekre'));
             $templateProcessor->setValue('nim_sekre', $request->input('nim_sekre'));
@@ -194,7 +197,7 @@ class DokumenController extends Controller
         
         $templatePath = public_path('004 - Upgrading - Peminjangan Gedung  (1).docx');
         $templateProcessor = new TemplateProcessor($templatePath);
-        $templateProcessor->setValue('NAMA_ORGANISASI', strtoupper($instansi->nama));
+        $templateProcessor->setValue('nama_organisasi', strtoupper($instansi->nama));
 
         // Mengganti teks di template
         $templateProcessor->setValue('JURUSAN', strtoupper($request->input('jurusan')));
@@ -205,19 +208,19 @@ class DokumenController extends Controller
         $templateProcessor->setValue('hal', $request->input('hal'));
 
         $tujuanlist = $users;
-        $templateProcessor->setValue('Tujuan', view('dokumen.createtemp', compact('tujuanlist')));
+        $templateProcessor->setValue('Tujuan', $request->input('tujuan'));
 
         $templateProcessor->setValue('nama_acara', $request->input('nama_acara'));
         $templateProcessor->setValue('Jam_Mulai', $request->input('jam_mulai'));
         $templateProcessor->setValue('jam_selesai', $request->input('jam_selesai'));
         $templateProcessor->setValue('lokasi', $request->input('lokasi'));
-        $templateProcessor->setValue('nama_ketua', $request->input('nama_ketua'));
+        $templateProcessor->setValue('nama_ketua', $instansi->pimpinan);
         $templateProcessor->setValue('nim_ketua', $request->input('nim_ketua'));
         $templateProcessor->setValue('nama_sekre', $request->input('nama_sekre'));
         $templateProcessor->setValue('nim_sekre', $request->input('nim_sekre'));
         $templateProcessor->setValue('pembina_organisasi', $request->input('pembina_organisasi'));
         $templateProcessor->setValue('nip_pembina', $request->input('nip_pembina'));
-
+        $templateProcessor->setValue('name', ($user->name));
         // Memproses input tanggal untuk mendapatkan hari dan tanggal dalam format yang diinginkan
         $inputTanggal = Carbon::parse($request->input('hari_tanggal'));
         $hariTanggal = $inputTanggal->locale('id')->translatedFormat('l / j F Y');

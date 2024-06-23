@@ -7,6 +7,11 @@
             {{ session('sukses') }}
         </div>
         @endif
+        @if(session('peringatan'))
+        <div class="alert alert-warning" role="alert">
+            {{ session('peringatan') }}
+        </div>
+        @endif
         <div class="row">
             <div class="col">
                 <h3><i class="nav-icon fas fa-envelope my-1 btn-sm-1"></i> Dokumen</h3>
