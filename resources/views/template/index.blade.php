@@ -10,7 +10,8 @@
         <div class="row">
             <div class="col">
                 <h3><i class="nav-icon fas fa-envelope my-1 btn-sm-1"></i> Template</h3>
-                <h5></i> Berikut contoh default template surat :</h5>
+                <h5> Berikut contoh default template surat :</h5>
+                <h5 style="color: red">Template yang disediakan hanya untuk undangan</h5>
         <embed id="pdfViewer" src="{{ route('pdf-viewer') }}" type="application/pdf" width="100%" height="600px" style="border:1px solid black;">
             </div>
         </div>

@@ -70,8 +70,8 @@
                             <td>{{ $suratMasuk->user->namaorganisasi }}</td>
                             <td>{{ $suratMasuk->kategori->nama }}</td>
                             <td><a href="{{ route('suratmasuk.download', $suratMasuk->id) }}">{{ $suratMasuk->dokumen->nama_dokumen }}</a></td>
-                            <td>{{ $suratMasuk->keterangan }}</td>
                             <td class="balasan-column">{{ $suratMasuk->balasan }}</td>
+                            <td>{{ $suratMasuk->keterangan }}</td>
                             <td>
                                 <a class="btn btn-success btn-sm acc-btn" data-toggle="modal" data-target="#replyModal{{ $suratMasuk->id }}">Balas</a>
                                 <a href="{{ route('suratmasuk.delete', $suratMasuk->id) }}" class="btn btn-danger btn-sm delete-btn" onclick="return confirm('Apakah Anda yakin ingin menghapus surat ini?')">Hapus</a>
