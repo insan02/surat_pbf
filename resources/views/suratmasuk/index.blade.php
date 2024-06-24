@@ -23,6 +23,16 @@
         background-color: #4CAF50;
         color: #fff;
     }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .balasan-column {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-width: 300px; /* Adjust this value as needed */
+    }
 </style>
 
 <section class="content card" style="padding: 10px;">
@@ -49,6 +59,7 @@
                             <th>Jenis</th>
                             <th>File</th>
                             <th>Balasan</th>
+                            <th>Keterangan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -59,11 +70,11 @@
                             <td>{{ $suratMasuk->user->namaorganisasi }}</td>
                             <td>{{ $suratMasuk->kategori->nama }}</td>
                             <td><a href="{{ route('suratmasuk.download', $suratMasuk->id) }}">{{ $suratMasuk->dokumen->nama_dokumen }}</a></td>
-                            <td>{{ $suratMasuk->balasan }}</td> <!-- Tampilkan Balasan -->
+                            <td>{{ $suratMasuk->keterangan }}</td>
+                            <td class="balasan-column">{{ $suratMasuk->balasan }}</td>
                             <td>
                                 <a class="btn btn-success btn-sm acc-btn" data-toggle="modal" data-target="#replyModal{{ $suratMasuk->id }}">Balas</a>
                                 <a href="{{ route('suratmasuk.delete', $suratMasuk->id) }}" class="btn btn-danger btn-sm delete-btn" onclick="return confirm('Apakah Anda yakin ingin menghapus surat ini?')">Hapus</a>
-                            </td>
                             </td>
                         </tr>
                         @endforeach

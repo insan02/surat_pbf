@@ -23,6 +23,11 @@
         background-color: #4CAF50;
         color: #fff;
     }
+    .balasan-column {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-width: 300px; /* Adjust this value as needed */
+    }
 </style>
 
 <section class="content card" style="padding: 10px;">
@@ -68,7 +73,7 @@
                             <td>{{ $transaksiSurat->kategori->nama }}</td>
                             <td><a href="{{ route('suratkeluar.tampil', $transaksiSurat->id) }}">{{ $transaksiSurat->dokumen->nama_dokumen }}</a></td>
                             <td>{{ $transaksiSurat->keterangan }}</td>
-                            <td>{{ $transaksiSurat->balasan }}</td>
+                            <td class="balasan-column">{{ $transaksiSurat->balasan }}</td>
                             <td>
                                 <a class="btn btn-warning btn-sm edit-btn"
                                     href="{{ route('suratkeluar.edit', $transaksiSurat->id) }}">Edit</a>

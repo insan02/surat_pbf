@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Kategori;
 use App\Dokumen;
 use App\User;
+use App\Mail\SuratKeluarNotification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+
 
 class TransaksiSuratController extends Controller
 {
@@ -34,27 +37,44 @@ class TransaksiSuratController extends Controller
     }
 
     public function tambahSuratKeluar(Request $request)
-    {
-        $request->validate([
-            'penerima' => 'required',
-            'jenis' => 'required',
-            'file' => 'required',
-            'keterangan' => 'nullable|string',
-        ]);
+{
+    $request->validate([
+        'penerima' => 'required',
+        'jenis' => 'required',
+        'file' => 'required',
+        'keterangan' => 'nullable|string',
+    ]);
 
-        $defaultBalasan = '-';
+    $defaultBalasan = '-';
 
-        TransaksiSurat::create([
-            'user_id' => Auth::id(),
-            'kategori_id' => $request->jenis,
-            'dokumen_id' => $request->file,
-            'penerima' => $request->penerima,
-            'balasan' => $defaultBalasan,
-            'keterangan' => $request->keterangan,
-        ]);
+    $transaksiSurat = TransaksiSurat::create([
+        'user_id' => Auth::id(),
+        'kategori_id' => $request->jenis,
+        'dokumen_id' => $request->file,
+        'penerima' => $request->penerima,
+        'balasan' => $defaultBalasan,
+        'keterangan' => $request->keterangan,
+    ]);
 
-        return redirect('/suratkeluar/index')->with("sukses", "Data Surat Keluar Berhasil Ditambahkan");
-    }
+    // Ambil penerima surat
+    $penerima = User::findOrFail($request->penerima);
+
+    // Ambil informasi dokumen terkait
+    $dokumen = Dokumen::findOrFail($request->file);
+    $namaFile = $dokumen->nama_dokumen;
+    $pdfPath = storage_path('app/public/dokumenpdf/' . $namaFile);
+
+    // Kirim email notifikasi ke penerima dengan lampiran PDF
+    Mail::to($penerima->email)->send(new SuratKeluarNotification(
+        Auth::user()->namaorganisasi,
+        $transaksiSurat->kategori->nama,
+        $transaksiSurat->keterangan,
+        $pdfPath, // Sertakan path ke file PDF di konstruktor mailable class
+        $namaFile // Sertakan nama file untuk digunakan sebagai nama lampiran
+    ));
+
+    return redirect('/suratkeluar/index')->with("sukses", "Data Surat Keluar Berhasil Ditambahkan");
+}
 
     public function editSuratKeluar($id)
 {
@@ -124,16 +144,21 @@ public function updateSuratKeluar(Request $request, $id)
     return response()->download($filePath, $namaFile);
 }
 
-    public function indexSuratMasuk()
+public function indexSuratMasuk()
 {
     $userId = Auth::id();
 
+    // Ambil daftar surat yang dihapus dari sesi
+    $deletedSuratIds = session()->get('deleted_surat_ids', []);
+
     $suratMasuks = TransaksiSurat::with('user', 'kategori', 'dokumen')
                                  ->where('penerima', $userId)
+                                 ->whereNotIn('id', $deletedSuratIds) // Tambahkan kondisi ini
                                  ->get();
 
     return view('suratmasuk.index', compact('suratMasuks'));
 }
+
 
 public function tampilSuratMasuk($id)
 {
@@ -163,18 +188,26 @@ public function tampilSuratMasuk($id)
     }
 
     public function deleteSuratMasuk($id)
-    {
-        $transaksiSurat = TransaksiSurat::findOrFail($id);
-        
-        // Lakukan pengecekan jika user yang sedang login adalah penerima surat atau memiliki otorisasi untuk menghapus
-        if ($transaksiSurat->penerima != Auth::id()) {
-            abort(403, 'Unauthorized action.');
-        }
-    
-        $transaksiSurat->delete();
-    
-        return redirect()->route('suratmasuk.index')->with('sukses', 'Surat masuk berhasil dihapus.');
+{
+    $transaksiSurat = TransaksiSurat::findOrFail($id);
+
+    // Lakukan pengecekan jika user yang sedang login adalah penerima surat atau memiliki otorisasi untuk menghapus
+    if ($transaksiSurat->penerima != Auth::id()) {
+        abort(403, 'Unauthorized action.');
     }
+
+    // Ambil daftar surat yang dihapus dari sesi
+    $deletedSuratIds = session()->get('deleted_surat_ids', []);
+
+    // Tambahkan ID surat yang dihapus ke dalam daftar
+    $deletedSuratIds[] = $id;
+
+    // Simpan daftar yang diperbarui kembali ke sesi
+    session()->put('deleted_surat_ids', $deletedSuratIds);
+
+    return redirect()->route('suratmasuk.index')->with('sukses', 'Surat masuk berhasil dihapus dari tampilan.');
+}
+
     
     
 
