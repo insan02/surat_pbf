@@ -178,7 +178,7 @@ class DokumenController extends Controller
                 $tujuan = $request->input('tujuan');
                 $namaAcara = $request->input('nama_acara');
                 $outputFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $hal) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $tujuan) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $namaAcara) . '.docx';
-                $outputPath = public_path('storage/public/dokumenpdf/' . $outputFilename);
+                $outputPath = public_path('storage/dokumenpdf/' . $outputFilename);
                 $templateProcessor->saveAs($outputPath);
 
                 Dokumen::create([
@@ -250,7 +250,7 @@ class DokumenController extends Controller
             $tujuan = $request->input('tujuan');
             $namaAcara = $request->input('nama_acara');
             $outputFilename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $hal) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $tujuan) . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $namaAcara) . '.docx';
-            $outputPath = public_path('storage/public/dokumenpdf/' . $outputFilename);
+            $outputPath = public_path('storage/dokumenpdf/' . $outputFilename);
             $templateProcessor->saveAs($outputPath);
 
             Dokumen::create([
