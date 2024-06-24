@@ -44,13 +44,14 @@ Route::group(['middleware' => ['auth','checkRole:user']], function () {
 Route::group(['middleware' => ['auth','checkRole:admin,user']], function () {
 
     // Rute untuk menampilkan halaman profil
-    Route::get('/profil', 'ProfilController@index')->name('profil');
+    Route::get('/profil', 'ProfilController@index')->name('profil.index');
 
     // Rute untuk menampilkan form edit password
-    Route::get('/profil/edit-password', 'ProfilController@editPassword')->name('edit-password');
+    Route::get('/profil/edit-password', 'ProfilController@editPassword')->name('profil.editPassword');
 
     // Rute untuk memproses update password
-    Route::post('/profil/update-password', 'ProfilController@updatePassword')->name('update-password');
+    Route::post('/profil/update-password', 'ProfilController@updatePassword')->name('profil.updatePassword');
+    
     Route::resource('/instansi','InstansiController');
 
 

@@ -2,9 +2,14 @@
 @section('content')
 <section class="content card" style="padding: 10px;">
     <div class="box">
-        @if(session('sukses'))
+        @if(session('success'))
         <div class="alert alert-success" role="alert">
-            {{ session('sukses') }}
+            {{ session('success') }}
+        </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
         </div>
         @endif
         <div class="row">
@@ -32,7 +37,7 @@
             </div>
             <div class="row">
                 <div class="col-3">
-                    <h5><label for="role">Level User</label></h5>
+                    <h5><label for="role">Role</label></h5>
                 </div>
                 <div class="col-9">
                     <h5><label>: {{ auth()->user()->role }}</label></h5>
@@ -40,7 +45,7 @@
             </div>
 
             <div class="col-12 text-center mt-4">
-                <a class="btn btn-primary" href="{{ route('edit-password') }}" role="button">
+                <a class="btn btn-primary" href="{{ route('profil.editPassword') }}" role="button">
                     <i class="fas fa-edit"></i> Edit Password
                 </a>
             </div>

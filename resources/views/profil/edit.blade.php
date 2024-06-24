@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{{ route('update-password') }}">
+            <form method="POST" action="{{ route('profil.updatePassword') }}">
                 @csrf
                 <div class="row">
                     <div class="col-3">
