@@ -53,16 +53,13 @@
                     <input type="text" class="form-control" id="nama_acara" name="nama_acara" required>
 
                     <label for="jam_mulai">Jam Mulai:</label>
-                    <input type="text" class="form-control" id="jam_mulai" name="jam_mulai" required>
+                    <input type="time" class="form-control" id="jam_mulai" name="jam_mulai" required>
 
                     <label for="jam_selesai">Jam Selesai:</label>
-                    <input type="text" class="form-control" id="jam_selesai" name="jam_selesai" required>
+                    <input type="time" class="form-control" id="jam_selesai" name="jam_selesai" required>
 
                     <label for="lokasi">Lokasi:</label>
                     <input type="text" class="form-control" id="lokasi" name="lokasi" required>
-
-                    <label for="nama_ketua">Nama Ketua:</label>
-                    <input type="text" class="form-control" id="nama_ketua" name="nama_ketua" required>
 
                     <label for="nim_ketua">NIM Ketua:</label>
                     <input type="text" class="form-control" id="nim_ketua" name="nim_ketua" required>
