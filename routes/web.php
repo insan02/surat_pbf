@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,6 +67,13 @@ Route::group(['middleware' => ['auth','checkRole:admin,user']], function () {
     Route::post('/dokumen', 'DokumenController@store')->name('dokumen.store');
     Route::get('/dokumen/createtemp', 'DokumenController@createtemp')->name('dokumen.createtemp');
     Route::delete('/dokumen/{dokumen}', 'DokumenController@destroy')->name('dokumen.delete');
+
+    Route::get('/jabatan/index', 'JabatanController@index')->name('jabatan.index');
+    Route::get('/jabatan/create', 'JabatanController@create')->name('jabatan.create');
+    Route::post('/jabatan', 'JabatanController@store')->name('jabatan.store');
+    Route::get('/jabatan/update/{jabatan}', 'JabatanController@edit')->name('jabatan.edit');
+    Route::put('/jabatan/update/{jabatan}', 'JabatanController@update')->name('jabatan.update');
+    Route::get('/jabatan/{jabatan}/delete', 'JabatanController@destroy')->name('jabatan.delete');
 
     Route::get('/template/index','TemplateController@index');
     Route::get('/pdf-viewer', 'TemplateController@defaultTemplate')->name('pdf-viewer');

@@ -32,9 +32,6 @@
                         required>{{$instansi->alamat}}</textarea>
                 </div>
                 <div class="col-6">
-                    <label for="pimpinan">Nama Pimpinan</label>
-                    <input name="pimpinan" type="text" class="form-control bg-light" id="pimpinan"
-                        placeholder="Nama Pimpinan" value="{{$instansi->pimpinan}}" required>
                     <label for="email">Email Instansi</label>
                     <input name="email" type="email" class="form-control bg-light" id="email"
                         placeholder="Email Instansi" value="{{$user->email ?? ''}}" required>

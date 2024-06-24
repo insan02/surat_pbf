@@ -143,6 +143,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="/jabatan/index" class="nav-link">
+                                <i class="nav-icon fas fa-file-alt"></i>
+                                <p>Jabatan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/dokumen/index" class="nav-link">
                                 <i class="nav-icon fas fa-file-alt"></i>
                                 <p>Dokumen</p>

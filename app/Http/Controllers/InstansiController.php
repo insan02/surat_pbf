@@ -33,7 +33,6 @@ class InstansiController extends Controller
         $this->validate($request, [
             'nama'     => 'required',
             'alamat'   => 'required',
-            'pimpinan' => 'required',
             'email'    => 'required|email',
             'file'     => 'file|mimes:jpeg,png|max:2048',
         ]);
@@ -49,7 +48,6 @@ class InstansiController extends Controller
 
         $instansi = Instansi::create([
             'alamat'   => $request->alamat,
-            'pimpinan' => $request->pimpinan,
             'file'     => 'uploads/logo/' . $newlogo,
             'user_id'  => $userId, // Set user_id to the ID of the logged-in user
         ]);
@@ -82,7 +80,6 @@ class InstansiController extends Controller
         $this->validate($request, [
             'nama'     => 'required',
             'alamat'   => 'required',
-            'pimpinan' => 'required',
             'email'    => 'required|email',
             'file'     => 'file|mimes:jpeg,png|max:2048',
         ]);
@@ -91,8 +88,7 @@ class InstansiController extends Controller
         $dataUser = User::findOrFail($userId);
         $post_data = [
             
-            'alamat'   => $request->alamat,
-            'pimpinan' => $request->pimpinan
+            'alamat'   => $request->alamat
         ];
         $updateDataUser = [
             'namaorganisasi'     => $request->nama,
