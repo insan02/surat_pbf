@@ -13,17 +13,12 @@
                         @method('PUT')
 
                         <div class="form-group">
-                            <label for="id_user">User</label>
-                            <select id="id_user" name="id_user" class="form-control">
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" {{ $user->id == $jabatan->id_user ? 'selected' : '' }}>{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label for="nama_jabatan">Nama Jabatan</label>
-                            <input type="text" id="nama_jabatan" name="nama_jabatan" class="form-control" value="{{ $jabatan->nama_jabatan }}" required>
+                            <select class="form-control" id="nama_jabatan" name="nama_jabatan" required>
+                                <option value="Pimpinan" {{ $jabatan->nama_jabatan == 'Pimpinan' ? 'selected' : '' }}>Pembina</option>
+                                <option value="Ketua" {{ $jabatan->nama_jabatan == 'Ketua' ? 'selected' : '' }}>Ketua</option>
+                                <option value="Sekretaris" {{ $jabatan->nama_jabatan == 'Sekretaris' ? 'selected' : '' }}>Sekretaris</option>
+                            </select>
                         </div>
 
                         <div class="form-group">

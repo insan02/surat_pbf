@@ -77,7 +77,7 @@
                         <option value="Direktur Kemahasiswaan">Direktur Kemahasiswaan</option>
                     </select>
 
-                    <label for="nama_pimpinan">Pimpinan:</label>
+                    <label for="nama_pimpinan">Pembina:</label>
                     <input type="text" class="form-control" id="nama_pimpinan" name="nama_pimpinan" required>
 
                     <label for="nip">NIP Pembina:</label>
