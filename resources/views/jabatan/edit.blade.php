@@ -39,6 +39,12 @@
                                     value="{{ $jabatan->nama }}" required>
                             </div>
 
+                            <div class="form-group">
+                                <label for="nim_nip">NIM/NIP</label>
+                                <input type="text" id="nim_nip" name="nim_nip" class="form-control"
+                                    value="{{ $jabatan->nim_nip }}" required>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>

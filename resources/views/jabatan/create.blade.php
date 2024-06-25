@@ -18,24 +18,29 @@
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('jabatan.store') }}">
-                        @csrf  
+                        @csrf
                         <div class="form-group">
                             <label for="nama_jabatan">Nama Jabatan</label>
                             <select class="form-control" id="nama_jabatan" name="nama_jabatan" required>
-                                <option value="">Pilih Nama Jabatan</option>
-                                <option value="Pimpinan">Pembina/PimpinanKampus</option>
-                                <option value="Ketua">Ketua</option>
-                                <option value="Sekretaris">Sekretaris</option>
+                                <option value="Pimpinan" {{ old('nama_jabatan') == 'Pimpinan' ? 'selected' : '' }}>Pembina/Pimpinan Kampus</option>
+                                <option value="Ketua" {{ old('nama_jabatan') == 'Ketua' ? 'selected' : '' }}>Ketua</option>
+                                <option value="Sekretaris" {{ old('nama_jabatan') == 'Sekretaris' ? 'selected' : '' }}>Sekretaris</option>
                             </select>
                         </div>
-
+                    
                         <div class="form-group">
                             <label for="nama">Nama</label>
-                            <input type="text" id="nama" name="nama" class="form-control" required>
+                            <input type="text" id="nama" name="nama" class="form-control" value="{{ old('nama') }}" required>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    
+                        <div class="form-group">
+                            <label for="nim_nip">NIM/NIP</label>
+                            <input type="text" id="nim_nip" name="nim_nip" class="form-control" value="{{ old('nim_nip') }}" required>
+                        </div>
+                    
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
+                    
                 </div>
             </div>
         </div>

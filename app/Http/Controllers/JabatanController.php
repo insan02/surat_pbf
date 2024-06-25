@@ -28,21 +28,26 @@ class JabatanController extends Controller
         $request->validate([
             'nama_jabatan' => 'required|string|max:255|unique:jabatans,nama_jabatan,NULL,id,id_user,' . $userId,
             'nama' => 'required|string|max:255|unique:jabatans,nama,NULL,id,id_user,' . $userId,
+            'nim_nip' => 'required|string|max:255|unique:jabatans,nim_nip,NULL,id,id_user,' . $userId,
         ]);
 
-        // Check for duplicate nama_jabatan or nama
+        // Check for duplicate nama_jabatan or nama or nim/nip
         $duplicateJabatan = Jabatan::where('nama_jabatan', $request->nama_jabatan)
                             ->where('id_user', $userId)
                             ->exists();
         $duplicateNama = Jabatan::where('nama', $request->nama)
                             ->where('id_user', $userId)
                             ->exists();
+        $duplicateNimNip = Jabatan::where('nim_nip', $request->nim_nip)
+                            ->where('id_user', $userId)
+                            ->exists();
 
-        if ($duplicateJabatan || $duplicateNama) {
+        if ($duplicateJabatan || $duplicateNama || $duplicateNimNip) {
             return redirect()->route('jabatan.create')
                              ->withErrors([
                                  'nama_jabatan' => $duplicateJabatan ? 'Jabatan dengan nama tersebut sudah ada.' : '',
                                  'nama' => $duplicateNama ? 'Nama dengan nama tersebut sudah ada.' : '',
+                                 'nim_nip' => $duplicateNimNip ? 'NIM/NIP dengan nim/nip tersebut sudah ada.' : '',
                              ])
                              ->withInput();
         }
@@ -50,6 +55,7 @@ class JabatanController extends Controller
         Jabatan::create([
             'nama_jabatan' => $request->nama_jabatan,
             'nama' => $request->nama,
+            'nim_nip' => $request->nim_nip,
             'id_user' => $userId,
         ]);
 
@@ -68,9 +74,10 @@ class JabatanController extends Controller
         $request->validate([
             'nama_jabatan' => 'required|string|max:255|unique:jabatans,nama_jabatan,' . $jabatan->id . ',id,id_user,' . $userId,
             'nama' => 'required|string|max:255|unique:jabatans,nama,' . $jabatan->id . ',id,id_user,' . $userId,
+            'nim_nip' => 'required|string|max:255|unique:jabatans,nim_nip,' . $jabatan->id . ',id,id_user,' . $userId,
         ]);
 
-        // Check for duplicate nama_jabatan or nama, excluding the current record
+        // Check for duplicate nama_jabatan or nama or nim/nip, excluding the current record
         $duplicateJabatan = Jabatan::where('nama_jabatan', $request->nama_jabatan)
                             ->where('id_user', $userId)
                             ->where('id', '!=', $jabatan->id)
@@ -79,12 +86,17 @@ class JabatanController extends Controller
                             ->where('id_user', $userId)
                             ->where('id', '!=', $jabatan->id)
                             ->exists();
+        $duplicateNimNip = Jabatan::where('nim_nip', $request->nim_nip)
+                            ->where('id_user', $userId)
+                            ->where('id', '!=', $jabatan->id)
+                            ->exists();
 
-        if ($duplicateJabatan || $duplicateNama) {
+        if ($duplicateJabatan || $duplicateNama || $duplicateNimNip) {
             return redirect()->route('jabatan.edit', $jabatan->id)
                              ->withErrors([
                                  'nama_jabatan' => $duplicateJabatan ? 'Jabatan dengan nama tersebut sudah ada.' : '',
                                  'nama' => $duplicateNama ? 'Nama dengan nama tersebut sudah ada.' : '',
+                                 'nim_nip' => $duplicateNimNip ? 'NIM/NIP dengan nim/nip tersebut sudah ada.' : '',
                              ])
                              ->withInput();
         }
@@ -92,6 +104,7 @@ class JabatanController extends Controller
         $jabatan->update([
             'nama_jabatan' => $request->nama_jabatan,
             'nama' => $request->nama,
+            'nim_nip' => $request->nim_nip,
         ]);
 
         return redirect()->route('jabatan.index')->with('success', 'Jabatan berhasil diupdate.');

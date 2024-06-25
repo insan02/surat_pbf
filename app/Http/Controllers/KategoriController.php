@@ -24,30 +24,19 @@ class KategoriController extends Controller
     }
 
     //function untuk tambah
-    public function tambah (Request $request)
+    public function tambah(Request $request)
     {
-        try {
-            $request->validate([
-                'nama' => 'unique:kategori|min:5',
-                'uraian' => 'min:5',
-            ]);
-            $kategori = new Kategori();
-            $kategori->nama = $request->input('nama');
-            $kategori->uraian = $request->input('uraian');
-            $kategori->save();
+        $kategori = new Kategori();
+        $kategori->nama = $request->input('nama');
+        $kategori->uraian = $request->input('uraian');
+        $kategori->save();
 
-            // Menggunakan SweetAlert untuk menampilkan notifikasi sukses
-            Alert::success('Berhasil', 'Data Kategori Berhasil Ditambahkan');
+        // Menggunakan SweetAlert untuk menampilkan notifikasi sukses
+        Alert::success('Berhasil', 'Data Kategori Berhasil Ditambahkan');
 
-            return redirect('/kategori/index')->with("sukses", "Data Kategori Berhasil Ditambahkan");
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            // Menampilkan pesan SweetAlert untuk kesalahan validasi
-            $errors = $e->validator->errors()->all();
-            Alert::error('Gagal', implode( $errors));
-
-            return redirect()->back()->withErrors($e->validator)->withInput();
-        }
+        return redirect('/kategori/index')->with("sukses", "Data Kategori Berhasil Ditambahkan");
     }
+
 
     //function untuk masuk ke view edit
     public function edit ($id_kategori)

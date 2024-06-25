@@ -11,7 +11,8 @@ class Jabatan extends Model
     protected $fillable = [
         'id_user', 
         'nama_jabatan', 
-        'nama'
+        'nama',
+        'nim_nip'
     ];
 
     public function user()

@@ -35,6 +35,7 @@
                                 <th>No</th>
                                 <th>Nama Jabatan</th>
                                 <th>Nama</th>
+                                <th>NIM/NIP</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -44,16 +45,16 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $jabatan->nama_jabatan }}</td>
                                 <td>{{ $jabatan->nama }}</td>
+                                <td>{{ $jabatan->nim_nip }}</td>
                                 <td>
                                     <a href="{{ route('jabatan.edit', ['jabatan' => $jabatan->id]) }}" class="btn btn-warning">Edit</a>
                                     <a href="{{ route('jabatan.delete', ['jabatan' => $jabatan->id]) }}" class="btn btn-danger btn-sm my-1 mr-sm-1" onclick="return confirm('Hapus Data ?')">Hapus</a>
-
-                                    
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>
