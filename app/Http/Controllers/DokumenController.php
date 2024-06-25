@@ -141,14 +141,14 @@ class DokumenController extends Controller
             $templateProcessor->setValue('jam_selesai', $request->input('jam_selesai'));
             $templateProcessor->setValue('lokasi', $request->input('lokasi'));
             $templateProcessor->setValue('nama_ketua', $ketua->nama);
-            $templateProcessor->setValue('nim_ketua', $request->input('nim_ketua'));
+            $templateProcessor->setValue('nim_ketua',  $ketua->nim_nip);
             $templateProcessor->setValue('nama_sekre', $sekretaris->nama);
-            $templateProcessor->setValue('nim_sekre', $request->input('nim_sekre'));
+            $templateProcessor->setValue('nim_sekre',  $sekretaris->nim_nip);
             $templateProcessor->setValue('name', ($user->name));
 
             $templateProcessor->setValue('Pimpinan', $request->input('jabatan_pimpinan'));
             $templateProcessor->setValue('nama_pimpinan', $pimpinan->nama);
-            $templateProcessor->setValue('nip', $request->input('nip'));
+            $templateProcessor->setValue('nip', $pimpinan->nim_nip);
 
             // Memproses input tanggal untuk mendapatkan hari dan tanggal dalam format yang diinginkan
             $inputTanggal = Carbon::parse($request->input('hari_tanggal'));
@@ -226,11 +226,11 @@ class DokumenController extends Controller
         $templateProcessor->setValue('jam_selesai', $request->input('jam_selesai'));
         $templateProcessor->setValue('lokasi', $request->input('lokasi'));
         $templateProcessor->setValue('nama_ketua', $ketua->nama);
-        $templateProcessor->setValue('nim_ketua', $request->input('nim_ketua'));
+        $templateProcessor->setValue('nim_ketua',  $ketua->nim_nip);
         $templateProcessor->setValue('nama_sekre', $sekretaris->nama);
-        $templateProcessor->setValue('nim_sekre', $request->input('nim_sekre'));
+        $templateProcessor->setValue('nim_sekre',  $sekretaris->nim_nip);
         $templateProcessor->setValue('pembina_organisasi', $pimpinan->nama);
-        $templateProcessor->setValue('nip_pembina', $request->input('nip_pembina'));
+        $templateProcessor->setValue('nip_pembina', $pimpinan->nim_nip);
         $templateProcessor->setValue('name', ($user->name));
         // Memproses input tanggal untuk mendapatkan hari dan tanggal dalam format yang diinginkan
         $inputTanggal = Carbon::parse($request->input('hari_tanggal'));

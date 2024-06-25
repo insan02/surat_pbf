@@ -60,16 +60,6 @@
                         <label for="lokasi">Lokasi:</label>
                         <input type="text" class="form-control" id="lokasi" name="lokasi" required>
 
-                        <label for="nim_ketua">NIM Ketua:</label>
-                        <input type="text" class="form-control" id="nim_ketua" name="nim_ketua" required>
-
-                  
-                        <label for="nim_sekre">NIM Sekretaris:</label>
-                        <input type="text" class="form-control" id="nim_sekre" name="nim_sekre" required>
-
-                        <label for="nip_pembina">NIP Pembina:</label>
-                        <input type="text" class="form-control" id="nip_pembina" name="nip_pembina" required>
-
                         <label for="hari_tanggal">Hari/Tanggal:</label>
                         <input type="date" class="form-control" id="hari_tanggal" name="hari_tanggal" required>
                     </div>
