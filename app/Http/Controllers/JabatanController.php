@@ -27,17 +27,24 @@ class JabatanController extends Controller
         $userId = Auth::id();
         $request->validate([
             'nama_jabatan' => 'required|string|max:255|unique:jabatans,nama_jabatan,NULL,id,id_user,' . $userId,
-            'nama' => 'required|string|max:255',
+            'nama' => 'required|string|max:255|unique:jabatans,nama,NULL,id,id_user,' . $userId,
         ]);
 
-        // Check for duplicate nama_jabatan
-        $duplicate = Jabatan::where('nama_jabatan', $request->nama_jabatan)
+        // Check for duplicate nama_jabatan or nama
+        $duplicateJabatan = Jabatan::where('nama_jabatan', $request->nama_jabatan)
+                            ->where('id_user', $userId)
+                            ->exists();
+        $duplicateNama = Jabatan::where('nama', $request->nama)
                             ->where('id_user', $userId)
                             ->exists();
 
-        if ($duplicate) {
+        if ($duplicateJabatan || $duplicateNama) {
             return redirect()->route('jabatan.create')
-                             ->with('error', 'Jabatan dengan nama tersebut sudah ada.');
+                             ->withErrors([
+                                 'nama_jabatan' => $duplicateJabatan ? 'Jabatan dengan nama tersebut sudah ada.' : '',
+                                 'nama' => $duplicateNama ? 'Nama dengan nama tersebut sudah ada.' : '',
+                             ])
+                             ->withInput();
         }
 
         Jabatan::create([
@@ -48,8 +55,6 @@ class JabatanController extends Controller
 
         return redirect()->route('jabatan.index')->with('success', 'Jabatan berhasil ditambahkan.');
     }
-
-
 
     public function edit(Jabatan $jabatan)
     {
@@ -62,18 +67,26 @@ class JabatanController extends Controller
         $userId = Auth::id();
         $request->validate([
             'nama_jabatan' => 'required|string|max:255|unique:jabatans,nama_jabatan,' . $jabatan->id . ',id,id_user,' . $userId,
-            'nama' => 'required|string|max:255',
+            'nama' => 'required|string|max:255|unique:jabatans,nama,' . $jabatan->id . ',id,id_user,' . $userId,
         ]);
 
-        // Check for duplicate nama_jabatan, excluding the current record
-        $duplicate = Jabatan::where('nama_jabatan', $request->nama_jabatan)
+        // Check for duplicate nama_jabatan or nama, excluding the current record
+        $duplicateJabatan = Jabatan::where('nama_jabatan', $request->nama_jabatan)
+                            ->where('id_user', $userId)
+                            ->where('id', '!=', $jabatan->id)
+                            ->exists();
+        $duplicateNama = Jabatan::where('nama', $request->nama)
                             ->where('id_user', $userId)
                             ->where('id', '!=', $jabatan->id)
                             ->exists();
 
-        if ($duplicate) {
+        if ($duplicateJabatan || $duplicateNama) {
             return redirect()->route('jabatan.edit', $jabatan->id)
-                             ->with('error', 'Jabatan dengan nama tersebut sudah ada.');
+                             ->withErrors([
+                                 'nama_jabatan' => $duplicateJabatan ? 'Jabatan dengan nama tersebut sudah ada.' : '',
+                                 'nama' => $duplicateNama ? 'Nama dengan nama tersebut sudah ada.' : '',
+                             ])
+                             ->withInput();
         }
 
         $jabatan->update([
