@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dokumen;
 use App\Instansi;
+use App\Jabatan;
 use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -72,6 +73,13 @@ class DokumenController extends Controller
         // Ambil jenis organisasi pengguna yang sedang login
         $user = User::find($userId);
         $instansi = Instansi::where('user_id', $userId)->first();
+        $ketua = Jabatan::where('id_user', $userId)->where('nama_jabatan', 'Ketua')->first();
+        $sekretaris = Jabatan::where('id_user', $userId)->where('nama_jabatan', 'Sekretaris')->first();
+        $pimpinan = Jabatan::where('id_user', $userId)->where('nama_jabatan', 'Pimpinan')->first();
+
+        if(!$ketua||!$sekretaris||!$pimpinan){
+            return redirect()->back()->with('peringatan', 'Silakan isi Jabatan terlebih dahulu dengan lengkap, ketua&Sekre&Pimpinan(pembina).');
+         }
         if(!$instansi){
             return redirect()->back()->with('peringatan', 'Silakan isi Profil instansi terlebih dahulu.');
          }
@@ -91,7 +99,10 @@ class DokumenController extends Controller
         $users = User::where('id', '<>', $userId)->pluck('namaorganisasi', 'id');
         $user = User::find($userId);
         $instansi = Instansi::where('user_id', $userId)->first();
-
+        
+        $ketua = Jabatan::where('id_user', $userId)->where('nama_jabatan', 'Ketua')->first();
+        $sekretaris = Jabatan::where('id_user', $userId)->where('nama_jabatan', 'Sekretaris')->first();
+        $pimpinan = Jabatan::where('id_user', $userId)->where('nama_jabatan', 'Pimpinan')->first();
         // Definisikan variabel $tujuanlist sebelum digunakan
         $tujuanlist = $users;
         if (!$instansi) {
@@ -129,14 +140,14 @@ class DokumenController extends Controller
             $templateProcessor->setValue('Jam_Mulai', $request->input('jam_mulai'));
             $templateProcessor->setValue('jam_selesai', $request->input('jam_selesai'));
             $templateProcessor->setValue('lokasi', $request->input('lokasi'));
-            $templateProcessor->setValue('nama_ketua', $instansi->pimpinan);
+            $templateProcessor->setValue('nama_ketua', $ketua->nama);
             $templateProcessor->setValue('nim_ketua', $request->input('nim_ketua'));
-            $templateProcessor->setValue('nama_sekre', $request->input('nama_sekre'));
+            $templateProcessor->setValue('nama_sekre', $sekretaris->nama);
             $templateProcessor->setValue('nim_sekre', $request->input('nim_sekre'));
             $templateProcessor->setValue('name', ($user->name));
 
             $templateProcessor->setValue('Pimpinan', $request->input('jabatan_pimpinan'));
-            $templateProcessor->setValue('nama_pimpinan', $request->input('nama_pimpinan'));
+            $templateProcessor->setValue('nama_pimpinan', $pimpinan->nama);
             $templateProcessor->setValue('nip', $request->input('nip'));
 
             // Memproses input tanggal untuk mendapatkan hari dan tanggal dalam format yang diinginkan
@@ -214,11 +225,11 @@ class DokumenController extends Controller
         $templateProcessor->setValue('Jam_Mulai', $request->input('jam_mulai'));
         $templateProcessor->setValue('jam_selesai', $request->input('jam_selesai'));
         $templateProcessor->setValue('lokasi', $request->input('lokasi'));
-        $templateProcessor->setValue('nama_ketua', $instansi->pimpinan);
+        $templateProcessor->setValue('nama_ketua', $ketua->nama);
         $templateProcessor->setValue('nim_ketua', $request->input('nim_ketua'));
-        $templateProcessor->setValue('nama_sekre', $request->input('nama_sekre'));
+        $templateProcessor->setValue('nama_sekre', $sekretaris->nama);
         $templateProcessor->setValue('nim_sekre', $request->input('nim_sekre'));
-        $templateProcessor->setValue('pembina_organisasi', $request->input('pembina_organisasi'));
+        $templateProcessor->setValue('pembina_organisasi', $pimpinan->nama);
         $templateProcessor->setValue('nip_pembina', $request->input('nip_pembina'));
         $templateProcessor->setValue('name', ($user->name));
         // Memproses input tanggal untuk mendapatkan hari dan tanggal dalam format yang diinginkan
