@@ -64,9 +64,9 @@
                     <label for="nim_ketua">NIM Ketua:</label>
                     <input type="text" class="form-control" id="nim_ketua" name="nim_ketua" required>
 
-                    <label for="nama_sekre">Nama Sekretaris:</label>
+                    {{-- <label for="nama_sekre">Nama Sekretaris:</label>
                     <input type="text" class="form-control" id="nama_sekre" name="nama_sekre" required>
-                    
+                     --}}
                     <label for="nim_sekre">NIM Sekretaris:</label>
                     <input type="text" class="form-control" id="nim_sekre" name="nim_sekre" required>
 
@@ -77,8 +77,8 @@
                         <option value="Direktur Kemahasiswaan">Direktur Kemahasiswaan</option>
                     </select>
 
-                    <label for="nama_pimpinan">Pembina:</label>
-                    <input type="text" class="form-control" id="nama_pimpinan" name="nama_pimpinan" required>
+                    {{-- <label for="nama_pimpinan">Pembina:</label>
+                    <input type="text" class="form-control" id="nama_pimpinan" name="nama_pimpinan" required> --}}
 
                     <label for="nip">NIP Pembina:</label>
                     <input type="text" class="form-control" id="nip" name="nip" required>
