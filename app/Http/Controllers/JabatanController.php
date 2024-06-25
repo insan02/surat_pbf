@@ -23,31 +23,32 @@ class JabatanController extends Controller
     }
 
     public function store(Request $request)
-{
-    $userId = Auth::id();
-    $request->validate([
-        'nama_jabatan' => 'required|string|max:255',
-        'nama' => 'required|string|max:255',
-    ]);
+    {
+        $userId = Auth::id();
+        $request->validate([
+            'nama_jabatan' => 'required|string|max:255|unique:jabatans,nama_jabatan,NULL,id,id_user,' . $userId,
+            'nama' => 'required|string|max:255',
+        ]);
 
-    // Check for duplicate combination of nama_jabatan and nama
-    $duplicate = Jabatan::where('nama_jabatan', $request->nama_jabatan)
-                        ->where('nama', $request->nama)
-                        ->exists();
+        // Check for duplicate nama_jabatan
+        $duplicate = Jabatan::where('nama_jabatan', $request->nama_jabatan)
+                            ->where('id_user', $userId)
+                            ->exists();
 
-    if ($duplicate) {
-        return redirect()->route('jabatan.create')
-                         ->with('error', 'Kombinasi nama jabatan dan nama tersebut sudah ada.');
+        if ($duplicate) {
+            return redirect()->route('jabatan.create')
+                             ->with('error', 'Jabatan dengan nama tersebut sudah ada.');
+        }
+
+        Jabatan::create([
+            'nama_jabatan' => $request->nama_jabatan,
+            'nama' => $request->nama,
+            'id_user' => $userId,
+        ]);
+
+        return redirect()->route('jabatan.index')->with('success', 'Jabatan berhasil ditambahkan.');
     }
 
-    Jabatan::create([
-        'nama_jabatan' => $request->nama_jabatan,
-        'nama' => $request->nama,
-        'id_user' => $userId,
-    ]);
-
-    return redirect()->route('jabatan.index')->with('success', 'Jabatan berhasil ditambahkan.');
-}
 
 
     public function edit(Jabatan $jabatan)
@@ -58,20 +59,21 @@ class JabatanController extends Controller
 
     public function update(Request $request, Jabatan $jabatan)
     {
+        $userId = Auth::id();
         $request->validate([
-            'nama_jabatan' => 'required|string|max:255',
+            'nama_jabatan' => 'required|string|max:255|unique:jabatans,nama_jabatan,' . $jabatan->id . ',id,id_user,' . $userId,
             'nama' => 'required|string|max:255',
         ]);
 
-        // Check for duplicate combination of nama_jabatan and nama, excluding the current record
+        // Check for duplicate nama_jabatan, excluding the current record
         $duplicate = Jabatan::where('nama_jabatan', $request->nama_jabatan)
-                            ->where('nama', $request->nama)
+                            ->where('id_user', $userId)
                             ->where('id', '!=', $jabatan->id)
                             ->exists();
 
         if ($duplicate) {
             return redirect()->route('jabatan.edit', $jabatan->id)
-                             ->with('error', 'Kombinasi nama jabatan dan nama tersebut sudah ada.');
+                             ->with('error', 'Jabatan dengan nama tersebut sudah ada.');
         }
 
         $jabatan->update([

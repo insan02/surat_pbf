@@ -14,7 +14,7 @@
                             <label for="nama_jabatan">Nama Jabatan</label>
                             <select class="form-control" id="nama_jabatan" name="nama_jabatan" required>
                                 <option value="">Pilih Nama Jabatan</option>
-                                <option value="Pimpinan">Pembina</option>
+                                <option value="Pimpinan">Pembina/PimpinanKampus</option>
                                 <option value="Ketua">Ketua</option>
                                 <option value="Sekretaris">Sekretaris</option>
                             </select>

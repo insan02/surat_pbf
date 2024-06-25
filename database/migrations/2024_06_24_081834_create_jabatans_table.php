@@ -22,6 +22,7 @@ class CreateJabatansTable extends Migration
 
             // Foreign key constraint
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            
         });
     }
 
