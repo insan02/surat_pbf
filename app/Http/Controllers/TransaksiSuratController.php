@@ -176,7 +176,7 @@ public function tampilSuratMasuk($id)
     public function reply(Request $request)
     {
         $request->validate([
-            'suratmasuk_id' => 'required|exists:transaksi_surat,id',
+            'suratmasuk_id' => 'required|exists:transaksisurat,id',
             'replyText' => 'required|string',
         ]);
 
