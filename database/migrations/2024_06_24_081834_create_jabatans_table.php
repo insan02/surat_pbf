@@ -18,6 +18,7 @@ class CreateJabatansTable extends Migration
             $table->unsignedInteger('id_user'); // Ensure it's unsignedBigInteger
             $table->string('nama_jabatan');
             $table->string('nama');
+            $table->integer('nim_nip');
             $table->timestamps();
 
             // Foreign key constraint
