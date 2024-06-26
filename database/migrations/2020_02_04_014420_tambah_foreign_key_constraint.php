@@ -15,7 +15,7 @@ class TambahForeignKeyConstraint extends Migration
     {
         
 
-        Schema::table('suratkeluar', function($table) {
+        Schema::table('transaksisurat', function($table) {
             $table->foreign('users_id')
                   ->references('id')->on('users')
                   ->onDelete('restrict')->onUpdate('restrict');
