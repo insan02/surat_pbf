@@ -69,7 +69,7 @@
                         @foreach ($transaksiSurats as $index => $transaksiSurat)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $transaksiSurat->penerimaUser->namaorganisasi }}</td>
+                            <td>{{ $transaksiSurat->penerimaUser}}</td>
                             <td>{{ $transaksiSurat->kategori->nama }}</td>
                             <td><a href="{{ route('suratkeluar.tampil', $transaksiSurat->id) }}">{{ $transaksiSurat->dokumen->nama_dokumen }}</a></td>
                             <td>{{ $transaksiSurat->keterangan }}</td>
