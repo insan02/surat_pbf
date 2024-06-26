@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransaksiSurat extends Model
 {
-    protected $table = 'transaksi_surat';
+    protected $table = 'transaksisurat';
 
     protected $fillable = [
         'user_id', // Add any other attributes that are mass assignable
