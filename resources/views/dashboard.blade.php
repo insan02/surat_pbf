@@ -51,7 +51,7 @@
                     <div class="col-lg-4 col-6">
                         <div class="small-box bg-light-blue">
                             <div class="inner">
-                                <h3>{{ DB::table('transaksisurat')->count() }}</h3>
+                                <h3>{{ DB::table('transaksi_surat')->count() }}</h3>
                                 <p>Transaksi Surat</p>
                             </div>
                             <div class="icon">

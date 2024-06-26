@@ -13,7 +13,7 @@ class CreateTransaksiSuratTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaksisurat', function (Blueprint $table) {
+        Schema::create('transaksi_surat', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('dokumen_id');
             $table->foreign('dokumen_id')->references('id')->on('dokumen');
@@ -35,7 +35,7 @@ class CreateTransaksiSuratTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksisurat');
+        Schema::dropIfExists('transaksi_surat');
     }
 }
 
