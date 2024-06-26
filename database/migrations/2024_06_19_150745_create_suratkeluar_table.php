@@ -22,6 +22,7 @@ class CreateSuratkeluarTable extends Migration
             $table->unsignedInteger('kategori_id');
             $table->foreign('kategori_id')->references('id')->on('kategori');
             $table->string('penerima');
+            $table->text('balasan');
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });
