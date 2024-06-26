@@ -66,23 +66,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($transaksiSurats as $index => $transaksiSurat)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $transaksiSurat->penerimaUser->namaorganisasi }}</td>
-                            <td>{{ $transaksiSurat->kategori->nama }}</td>
-                            <td><a href="{{ route('suratkeluar.tampil', $transaksiSurat->id) }}">{{ $transaksiSurat->dokumen->nama_dokumen }}</a></td>
-                            <td>{{ $transaksiSurat->keterangan }}</td>
-                            <td class="balasan-column">{{ $transaksiSurat->balasan }}</td>
-                            <td>
-                                <a class="btn btn-warning btn-sm edit-btn"
-                                    href="{{ route('suratkeluar.edit', $transaksiSurat->id) }}">Edit</a>
-                                <a class="btn btn-danger btn-sm delete-btn"
-                                    href="{{ route('suratkeluar.delete', $transaksiSurat->id) }}"
-                                    onclick="showDeletePopup()">Hapus</a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        @php
+                        $nomorUrut = 1;
+                    @endphp
+                    @foreach ($transaksiSurats as $index => $transaksiSurat)
+                        @if ($transaksiSurat->penerimaUser)
+                            <tr>
+                                <td>{{ $nomorUrut }}</td>
+                                <td>{{ $transaksiSurat->penerimaUser->namaorganisasi }}</td>
+                                <td>{{ $transaksiSurat->kategori->nama }}</td>
+                                <td><a href="{{ route('suratkeluar.tampil', $transaksiSurat->id) }}">{{ $transaksiSurat->dokumen->nama_dokumen }}</a></td>
+                                <td>{{ $transaksiSurat->keterangan }}</td>
+                                <td class="balasan-column">{{ $transaksiSurat->balasan }}</td>
+                                <td>
+                                    <a class="btn btn-warning btn-sm edit-btn"
+                                        href="{{ route('suratkeluar.edit', $transaksiSurat->id) }}">Edit</a>
+                                    <a class="btn btn-danger btn-sm delete-btn"
+                                        href="{{ route('suratkeluar.delete', $transaksiSurat->id) }}"
+                                        onclick="showDeletePopup()">Hapus</a>
+                                </td>
+                            </tr>
+                            @php
+                                $nomorUrut++;
+                            @endphp
+                        @endif
+                    @endforeach
                     </tbody>
                 </table>
             </div>
