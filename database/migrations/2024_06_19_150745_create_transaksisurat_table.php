@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSuratkeluarTable extends Migration
+class CreateTransaksiSuratTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSuratkeluarTable extends Migration
      */
     public function up()
     {
-        Schema::create('suratkeluar', function (Blueprint $table) {
+        Schema::create('transaksisurat', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('dokumen_id');
             $table->foreign('dokumen_id')->references('id')->on('dokumen');
@@ -35,7 +35,7 @@ class CreateSuratkeluarTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('suratkeluar');
+        Schema::dropIfExists('transaksisurat');
     }
 }
 
