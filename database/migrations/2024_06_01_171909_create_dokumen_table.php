@@ -17,7 +17,9 @@ class CreateDokumenTable extends Migration
             $table->id();
             $table->string('event');
             $table->string('nama_dokumen');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

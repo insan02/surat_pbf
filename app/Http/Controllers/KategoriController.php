@@ -64,4 +64,5 @@ class KategoriController extends Controller
         return redirect('kategori/index') ->with('sukses','Data kategori Berhasil Dihapus');
     }
 
+    //function untuk import excel
 }
