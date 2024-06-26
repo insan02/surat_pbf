@@ -41,7 +41,7 @@
 
                             <div class="form-group">
                                 <label for="nim_nip">NIM/NIP</label>
-                                <input type="text" id="nim_nip" name="nim_nip" class="form-control"
+                                <input type="number" id="nim_nip" name="nim_nip" class="form-control"
                                     value="{{ $jabatan->nim_nip }}" required>
                             </div>
 
