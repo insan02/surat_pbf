@@ -64,14 +64,4 @@ class KategoriController extends Controller
         return redirect('kategori/index') ->with('sukses','Data kategori Berhasil Dihapus');
     }
 
-    //function untuk import excel
-    public function import(){
-        // Excel::import(new KlasifikasiImport, 'data_klasifikasi.xls');
-        Excel::import(new KategoriImport)->import('data_kategori.xls', null, \Maatwebsite\Excel\Excel::XLS);
-        return redirect('kategori/index')->with('sukses', 'Import kategori Berhasil');
-
-        // Excel::import(new ImportKlasifikasi,$request->file('data_klasifikasi'));
-        // return back()->with('sukses','Import Klasifikasi Sukses');
-        // // dd($request->all());
-    }
 }
